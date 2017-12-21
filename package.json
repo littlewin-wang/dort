@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "demo": "cd test && node ../client/index.js 'demo' --test true",
+    "demo": "nodemon client/index.js 'demo' --test true --path /test",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

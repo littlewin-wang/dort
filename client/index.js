@@ -31,9 +31,15 @@ class App {
         default: 1,
         type: 'number'
       })
+      .option('path', {
+        alias: 'f',
+        describe: '目录地址',
+        default: '',
+        type: 'string'
+      })
       .option('name', {
         alias: 'n',
-        describe: '工程名称 ',
+        describe: '工程名称',
         default: '',
         type: 'string'
       })
@@ -63,13 +69,14 @@ class App {
       })
       .option('max-file-size', {
         alias: 'm',
-        describe: '单文件大小限制',
+        describe: '文件大小限制',
         default: 99999,
         type: 'number'
       })
       .argv
 
     config.debug = args.debug
+    config.path = args.path
     config.name = args.name
     config.port = args.port
     config.exclude = args.exclude

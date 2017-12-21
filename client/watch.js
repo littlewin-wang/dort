@@ -10,7 +10,7 @@ const socketIoClient = require('socket.io-client')
 class Watch {
   constructor(_config) {
     this.config = _config
-    this.path = process.cwd()
+    this.path = process.cwd() + _config.path
 
     this.setExcludeRegex()
     this.setSocket()
