@@ -139,6 +139,30 @@ class App {
           console.log('[dort] > socket'.green.bold + ' - ' + 'start_project'.cyan)
         }
       })
+
+      socket.on('create_file', data => {
+        if (this.config.debug >= 1) {
+          console.log('[dort] > socket'.green.bold + ' - ' + 'create_file'.cyan + ' - ' + data.path.cyan)
+        }
+      })
+
+      socket.on('update_file', data => {
+        if (this.config.debug >= 1) {
+          console.log('[dort] > socket'.green.bold + ' - ' + 'update_file'.cyan + ' - ' + data.path.cyan)
+        }
+      })
+
+      socket.on('delete_file', data => {
+        if (this.config.debug >= 1) {
+          console.log('[dort] > socket'.green.bold + ' - ' + 'delete_file'.cyan + ' - ' + data.path.cyan)
+        }
+      })
+
+      socket.on('disconnect', () => {
+        if (this.config.debug >= 1) {
+          console.log('[dort] > socket'.green.bold + ' - ' + 'disconnect'.cyan + ' - ' + socket.id.cyan)
+        }
+      })
     })
   }
 
