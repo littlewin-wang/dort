@@ -1,11 +1,13 @@
 /**
- * 用户端入口文件
+ * client端入口文件
  */
 
 const colors = require('colors')
 const ip = require('ip')
+const socketIo = require('socket.io')
 
 const Watch = require('./watch')
+const Site = require('./site.js')
 
 const packageConfig = require('../package.json')
 
@@ -15,6 +17,19 @@ class App {
 
     // 导入配置参数
     this.setConfig()
+
+    // 设置site
+    this.setSite(
+      () => {
+        this.setSocket()
+      },
+      () => {
+        console.log('[dort]'.green.bold + ' - ' + 'seems to be running already'.cyan)
+      },
+      () => {
+        console.log('[dort]'.green.bold + ' - ' + 'error'.red)
+      }
+    )
 
     // 开启监控模块
     this.setWatch()
@@ -32,7 +47,7 @@ class App {
         type: 'number'
       })
       .option('path', {
-        alias: 'f',
+        alias: 'pa',
         describe: '目录地址',
         default: '',
         type: 'string'
@@ -44,7 +59,7 @@ class App {
         type: 'string'
       })
       .option('port', {
-        alias: 'p',
+        alias: 'po',
         describe: '服务端口',
         default: 4574,
         type: 'number'
@@ -99,9 +114,32 @@ class App {
     if (this.config.debug >= 1) {
       for (const _configKey in this.config) {
         const _configValue = '' + this.config[_configKey]
-        console.log('[config]'.yellow.bold + ' - ' + '<' + _configKey.green + '>' + ': ' + _configValue.cyan)
+        console.log('[dort]'.yellow.bold + ' - ' + '<' + _configKey.green + '>' + ': ' + _configValue.cyan)
       }
     }
+  }
+
+  setSite (_success, _isRunning, _error) {
+    this.site = new Site(this.config, _success, _isRunning, _error)
+  }
+
+  setSocket () {
+    this.config.socket = socketIo.listen(this.site.server)
+
+    // 新建socket监听watchSocket
+    const watchSocket = this.config.socket.of('/watch')
+
+    watchSocket.on('connection', socket => {
+      if (this.config.debug >= 1) {
+        console.log('[dort]'.green.bold + ' - ' + 'socket connect'.cyan + ' - ' + socket.id.cyan)
+      }
+
+      socket.on('start_project', data => {
+        if (this.config.debug >= 1) {
+          console.log('[dort] > socket'.green.bold + ' - ' + 'start_project'.cyan)
+        }
+      })
+    })
   }
 
   setWatch () {

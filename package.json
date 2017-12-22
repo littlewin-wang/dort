@@ -29,10 +29,16 @@
   "dependencies": {
     "chokidar": "^1.7.0",
     "colors": "^1.1.2",
+    "express": "^4.16.2",
+    "helmet": "^3.9.0",
     "ip": "^1.1.5",
     "mime": "^2.0.3",
     "minimatch": "^3.0.4",
+    "socket.io": "^2.0.4",
     "socket.io-client": "^2.0.4",
     "yargs": "^10.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.14.1"
   }
 }

@@ -25,13 +25,13 @@ class Watch {
       this.socket.emit('start_project', { name: this.config.name, path: this.path, excludeRegex: '' + this.excludeRegex })
 
       if (this.config.debug) {
-        console.log('[watch] > socket'.green.bold + ' - ' + 'connect'.cyan)
+        console.log('[watch]'.green.bold + ' - ' + 'socket connect'.cyan)
       }
     })
 
     this.socket.on('disconnect', () => {
       if (this.config.debug) {
-        console.log('[watch] > socket'.green.bold + ' - ' + 'disconnect'.cyan)
+        console.log('[watch]'.green.bold + ' - ' + 'socket disconnect'.cyan)
       }
     })
   }
@@ -59,7 +59,6 @@ class Watch {
       this.path,
       {
         ignored: this.excludeRegex
-        // ignoreInitial: !this.config.initialSend
       }
     )
 
