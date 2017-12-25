@@ -8,6 +8,7 @@ const socketIo = require('socket.io')
 
 const Watch = require('./watch')
 const Site = require('./site.js')
+const Projects = require('./projects.js')
 
 const packageConfig = require('../package.json')
 
@@ -22,6 +23,7 @@ class App {
     this.setSite(
       () => {
         this.setSocket()
+        this.setProjects()
       },
       () => {
         console.log('[dort]'.green.bold + ' - ' + 'seems to be running already'.cyan)
@@ -164,6 +166,10 @@ class App {
         }
       })
     })
+  }
+
+  setProjects () {
+    this.projects = new Projects(this.config)
   }
 
   setWatch () {
