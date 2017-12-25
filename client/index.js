@@ -132,11 +132,15 @@ class App {
     const watchSocket = this.config.socket.of('/watch')
 
     watchSocket.on('connection', socket => {
+      let project
+
       if (this.config.debug >= 1) {
         console.log('[dort]'.green.bold + ' - ' + 'socket connect'.cyan + ' - ' + socket.id.cyan)
       }
 
       socket.on('start_project', data => {
+        project = this.projects.createProject(data)
+
         if (this.config.debug >= 1) {
           console.log('[dort] > socket'.green.bold + ' - ' + 'start_project'.cyan)
         }
