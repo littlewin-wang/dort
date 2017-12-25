@@ -2,7 +2,8 @@
  * 文件集合模块
  */
 
-const paths = require('./paths.js')
+const Paths = require('./paths.js')
+const File = require('./file.js')
 
 class Files {
   constructor(_config, _options) {
@@ -15,8 +16,8 @@ class Files {
 
   create (_path, _content) {
     // 初始化地址
-    const normalizedPath = paths.normalize(_path)
-    const parsedPath = paths.parse(normalizedPath)
+    const normalizedPath = Paths.normalize(_path)
+    const parsedPath = Paths.parse(normalizedPath)
 
     // 获取文件
     let file = this.get(normalizedPath)
@@ -28,7 +29,7 @@ class Files {
     // 创建文件信息
     file = {
       name: parsedPath.base,
-      path: parsedPath.dir,
+      directory: parsedPath.dir,
       content: _content
     }
 
@@ -42,7 +43,7 @@ class Files {
 
   delete (_path) {
     // 初始化地址
-    const normalizedPath = paths.normalize(_path)
+    const normalizedPath = Paths.normalize(_path)
 
     // 获取文件
     let file = this.get(normalizedPath)
