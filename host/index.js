@@ -155,6 +155,8 @@ class App {
       })
 
       socket.on('update_file', data => {
+        project.files.createVersion(data.path, data.content)
+
         if (this.config.debug >= 1) {
           console.log('[dort] > socket'.green.bold + ' - ' + 'update_file'.cyan + ' - ' + data.path.cyan)
         }
