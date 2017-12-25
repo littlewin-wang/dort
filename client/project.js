@@ -4,12 +4,16 @@
 
 const slug = require('slug')
 
+const Files = require('./files.js')
+
 class Project {
   constructor (_config, _options) {
     this.config = _config
 
     this.setName(_options.name)
     this.setSocket()
+
+    this.files = new Files(this.config, { projectSocket: this.projectSocket })
   }
 
   setSocket () {

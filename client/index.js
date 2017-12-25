@@ -147,6 +147,8 @@ class App {
       })
 
       socket.on('create_file', data => {
+        project.files.create(data.path, data.content)
+
         if (this.config.debug >= 1) {
           console.log('[dort] > socket'.green.bold + ' - ' + 'create_file'.cyan + ' - ' + data.path.cyan)
         }
