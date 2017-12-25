@@ -55,6 +55,18 @@ class Projects {
     return project
   }
 
+  deleteProject (_slug) {
+    const project = this.projects[_slug]
+
+    if (project) {
+      // 删除项目
+      delete this.projects[_slug]
+      project.destructor()
+
+      this.projectsSocket.emit('update_projects', this.describe())
+    }
+  }
+
   describe () {
     const ret = {}
     ret.domain = this.config.domain

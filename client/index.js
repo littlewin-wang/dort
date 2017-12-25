@@ -165,6 +165,8 @@ class App {
       })
 
       socket.on('disconnect', () => {
+        this.projects.deleteProject(project.slug)
+
         if (this.config.debug >= 1) {
           console.log('[dort] > socket'.green.bold + ' - ' + 'disconnect'.cyan + ' - ' + socket.id.cyan)
         }
