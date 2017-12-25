@@ -65,18 +65,30 @@ class Files {
     return false
   }
 
+  createVersion (_path, _content) {
+    const normalizedPath = Paths.normalize(_path)
+
+    const file = this.get(normalizedPath, true)
+
+    if (!!_content) {
+      file.createVersion(_content)
+    }
+
+    return file
+  }
+
   get (_path, _force) {
-    const force = !!_force
+    let force = !!_force
+
+    // 已经存在
+    if (!!this.files[_path]) {
+      return this.files[_path]
+    }
 
     // 强制更新
     if (force) {
-      file = this.create(_path)
+      let file = this.create(_path)
       return file
-    }
-
-    // 已经存在
-    if (this.files[_path]) {
-      return this.files[_path]
     }
 
     return false
