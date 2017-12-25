@@ -161,6 +161,8 @@ class App {
       })
 
       socket.on('delete_file', data => {
+        project.files.delete(data.path)
+
         if (this.config.debug >= 1) {
           console.log('[dort] > socket'.green.bold + ' - ' + 'delete_file'.cyan + ' - ' + data.path.cyan)
         }
