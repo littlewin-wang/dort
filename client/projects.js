@@ -51,7 +51,6 @@ class Projects {
     this.projects[project.slug] = project
     this.projectsSocket.emit('update_projects', this.describe())
 
-    console.log(project.slug)
     return project
   }
 
