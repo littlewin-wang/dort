@@ -43,6 +43,7 @@ class Project {
     const ret = {}
 
     ret.name = this.name
+    ret.files = this.files.describe()
 
     return ret
   }

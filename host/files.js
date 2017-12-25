@@ -27,18 +27,21 @@ class Files {
     }
 
     // 创建文件信息
-    file = {
+    file = new File({
       name: parsedPath.base,
       directory: parsedPath.dir,
-      content: _content
-    }
+      content: _content,
+      projectSocket: this.projectSocket
+    })
 
     // 更新文件集合信息
     this.files[normalizedPath] = file
     this.count++
 
-    // 触发事件
-    this.projectSocket.emit('create_file', file)
+    // 通知前端
+    this.projectSocket.emit('create_file', file.describe())
+
+    return file
   }
 
   delete (_path) {
@@ -49,11 +52,12 @@ class Files {
     let file = this.get(normalizedPath)
 
     if (file) {
+      file.destructor()
       delete this.files[normalizedPath]
       this.count--
 
       // 触发事件
-      this.projectSocket.emit('delete_file', file)
+      this.projectSocket.emit('delete_file', file.describe())
 
       return true
     }
@@ -84,7 +88,7 @@ class Files {
     ret.files = []
 
     for (const _filePath in this.files) {
-      ret.files.push(this.files[_filePath])
+      ret.files.push(this.files[_filePath].describe())
     }
   }
 }
