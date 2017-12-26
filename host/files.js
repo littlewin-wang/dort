@@ -27,7 +27,7 @@ class Files {
     }
 
     // 创建文件信息
-    file = new File({
+    file = new File(this.config, {
       name: parsedPath.base,
       directory: parsedPath.dir,
       content: _content,

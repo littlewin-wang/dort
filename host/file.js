@@ -6,8 +6,9 @@ const diff = require('diff')
 const ids = require('./ids.js')
 
 class File {
-  constructor (_options) {
+  constructor(_config, _options) {
     // 初始化基本信息
+    this.config = _config
     this.id = ids.getId()
     this.name = _options.name
     this.path = {
@@ -21,6 +22,10 @@ class File {
     const nameArr = this.name.split('.')
     this.extension = nameArr.length > 1 ? nameArr[nameArr.length - 1] : ''
 
+    if (this.config.debug >= 1) {
+      console.log('[file]'.green.bold + ' - ' + `${this.path.full}`.yellow + ' - ' + 'has been created'.cyan)
+    }
+
     // 创建版本信息
     if (_options.content) {
       this.createVersion(_options.content)
@@ -32,7 +37,7 @@ class File {
     const lastVersion = this.getLastVersion()
 
     version.date = new Date()
-    version.content = content
+    version.content = content ? content.toString() : ''
 
     // 过滤首次空白提交
     if (!lastVersion && version.content === '') {
@@ -44,7 +49,7 @@ class File {
     if (!lastVersion || !lastVersion.content) {
       lastContent = ''
     } else {
-      lastContent = lastVersion.content
+      lastContent = lastVersion.content.toString()
     }
 
     const diffs = diff.diffLines(
@@ -52,7 +57,7 @@ class File {
       version.content
     )
 
-    // 没有改变
+    // 没有改变, 不记录版本信息
     if (diffs.length === 1 && lastContent !== '') {
       return false
     }
@@ -64,12 +69,18 @@ class File {
 
     // 保存版本记录
     this.versions.push(version)
+
+    if (this.config.debug >= 1) {
+      console.log('[file]'.green.bold + ' - ' + `${this.path.full}`.yellow + ' - ' + 'has new version'.cyan + ' - ' + version.date.toLocaleString())
+    }
   }
 
+  // 获取之前版本信息
   getLastVersion () {
     return this.versions.length ? this.versions[this.versions.length - 1] : false
   }
 
+  // 指定描述信息
   describe () {
     const ret = {}
 
@@ -83,7 +94,9 @@ class File {
   }
 
   destructor () {
-
+    if (this.config.debug >= 1) {
+      console.log('[file]'.green.bold + ' - ' + `${this.path.full}`.yellow + ' - ' + 'has been deleted'.cyan)
+    }
   }
 }
 
