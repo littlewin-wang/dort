@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "demo": "nodemon host/index.js 'demo' --test true --path /test",
+    "demo": "nodemon --watch host host/index.js 'demo' --test true --path /test",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

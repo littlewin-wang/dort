@@ -12,6 +12,7 @@ class Files {
     this.files = {}
     this.count = 0
     this.projectSocket = _options.projectSocket
+    this.lastVersionDate = new Date()
   }
 
   create (_path, _content) {
@@ -37,6 +38,7 @@ class Files {
     // 更新文件集合信息
     this.files[normalizedPath] = file
     this.count++
+    this.lastVersionDate = new Date()
 
     // 通知前端
     this.projectSocket.emit('create_file', file.describe())
@@ -56,6 +58,8 @@ class Files {
       delete this.files[normalizedPath]
       this.count--
 
+      this.lastVersionDate = new Date()
+
       // 触发事件
       this.projectSocket.emit('delete_file', file.describe())
 
@@ -73,6 +77,8 @@ class Files {
     if (!!_content) {
       file.createVersion(_content)
     }
+
+    this.lastVersionDate = new Date()
 
     return file
   }

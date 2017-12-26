@@ -12,6 +12,7 @@ class Project {
 
     this.setName(_options.name)
     this.setSocket()
+    this.date = new Date()
 
     this.files = new Files(this.config, { projectSocket: this.projectSocket })
   }
@@ -29,6 +30,8 @@ class Project {
   }
 
   destructor () {
+    this.projectSocket.emit('destruct')
+
     if (this.config.debug >= 1) {
       console.log('[project]'.green.bold + ' - ' + `${this.slug} deleted.`.cyan)
     }

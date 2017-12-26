@@ -71,6 +71,18 @@ class Projects {
     ret.domain = this.config.domain
     ret.projects = {}
 
+    for (const _slug in this.projects) {
+      const _project = this.projects[_slug]
+
+      ret.projects[_slug] = {
+        slug: _project.slug,
+        name: _project.name,
+        fileCount: _project.files.count,
+        date: _project.date,
+        lastUpdateDate: _project.files.lastVersionDate
+      }
+    }
+
     return ret
   }
 }
