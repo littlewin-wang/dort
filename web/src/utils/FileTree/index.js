@@ -69,16 +69,17 @@ class FileTree {
    * 增加文件夹
    * @param {string} path 路径
    * @param {object} data 数据
+   * @return {object} 成功返回创建的文件夹/失败返回null
    */
   addFolder (path = '', data = {}) {
     if (typeof path !== 'string') {
       console.warn('[addFolder]: path is not valid')
-      return false
+      return null
     }
 
     if (typeof data !== 'object') {
       console.warn('[addFolder]: data is not valid')
-      return false
+      return null
     }
 
     // 将文件路径分级
@@ -117,6 +118,7 @@ class FileTree {
   /**
    * 删除文件夹
    * @param {string} path 路径
+   * @return {object} 成功或失败
    */
   rmFolder (path = '') {
     if (typeof path !== 'string') {
@@ -196,6 +198,44 @@ class FileTree {
     }
 
     return false
+  }
+
+  /**
+   * 增加文件[增加路径中不存在的所有文件夹]
+   * @param {string} path 路径
+   * @param {object} data 添加的参数
+   * @return {object} 成功返回创建的文件/失败返回null
+   */
+  addFile (path = '', data = {}) {
+    if (typeof path !== 'string') {
+      console.warn('[addFile]: path is not valid')
+      return null
+    }
+
+    if (typeof data !== 'object') {
+      console.warn('[addFile]: data is not valid')
+      return null
+    }
+
+    // 将文件路径分级
+    const newPath = this.formatPath(path)
+    const pathArr = newPath.split('/')
+
+    // 将最后一级弹出来
+    const pathLast = pathArr.pop()
+
+    const folder = this.addFolder(pathArr.join('/'))
+    const file = {
+      name: pathLast
+    }
+
+    Object.assign(file, data)
+    folder.files.push(file)
+
+    // 更新统计数据
+    this.updateCount()
+
+    return file
   }
 }
 
