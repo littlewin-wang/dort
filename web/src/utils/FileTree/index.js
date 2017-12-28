@@ -8,7 +8,9 @@ class FileTree {
    * @param {object} options 配置参数 ()
    */
   constructor (options = {}) {
-    // 初始化统计个数
+    this.rmEmpty = !!options.rmEmpty
+
+    // 初始化
     this.fileCount = 0
     this.folderCount = 0
     this.allCount = 0
@@ -190,6 +192,11 @@ class FileTree {
           folder.onRemove.call(this, folder)
         }
 
+        // 根据配置决定是否删除空目录
+        if (this.rmEmpty) {
+          this.formatFolder()
+        }
+
         // 更新统计数据
         this.updateCount()
 
@@ -322,6 +329,11 @@ class FileTree {
           file.onRemove.call(this, file)
         }
 
+        // 根据配置决定是否删除空目录
+        if (this.rmEmpty) {
+          this.formatFolder()
+        }
+
         // 更新统计数据
         this.updateCount()
 
@@ -381,6 +393,42 @@ class FileTree {
     }
 
     return null
+  }
+
+  /**
+   * 删除空目录
+   * @return {number} 删除掉的目录个数
+   */
+  formatFolder () {
+    let retCount = 0
+
+    const removeFolder = folder => {
+      let folders = folder.folders.concat()
+
+      folders.map((item, index) => {
+        if (removeFolder(item)) {
+          // 可以删除
+          retCount++
+          folder.folders.splice(index, 1)
+
+          // 执行回调
+          if (item.onRemove && typeof item.onRemove === 'function') {
+            item.onRemove.call(this, item)
+          }
+        }
+      })
+
+      // 文件夹内空则返回true，否则返回false
+      return (folder.folders.length === 0 && folder.files.length === 0)
+    }
+
+    // 从./开始嵌套
+    removeFolder(this.folders[0])
+
+    // 更新统计数据
+    this.updateCount()
+
+    return retCount
   }
 }
 
