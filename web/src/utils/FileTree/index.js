@@ -298,6 +298,57 @@ class FileTree {
 
     return false
   }
+
+  /**
+   * 获取文件
+   * @param {string} 文件路径
+   * @return {object} 文件或者null
+   */
+  getFile (path = '') {
+    if (typeof path !== 'string') {
+      console.warn('[getFile]: path is not valid')
+      return null
+    }
+
+    // 将文件路径分级
+    const newPath = this.formatPath(path)
+    const pathArr = newPath.split('/')
+
+    // 将最后一级弹出来
+    const pathLast = pathArr.pop()
+
+    let folders = this.folders
+    let folder
+
+    // 按照路径层层迭代，false即退出循环
+    pathArr.every(item => {
+      let find = folders.find(folder => item === folder.name)
+
+      if (find) {
+        folder = find
+        folders = find.folders
+      } else {
+        folder = null
+        folders = null
+      }
+
+      return find
+    })
+
+    // 查找最后一级目录
+    if (folder && folders) {
+      let index = folder.files.findIndex(item => item.name === pathLast)
+
+      // 存在则返回
+      if (index !== -1) {
+        const file = folder.files[index]
+
+        return file
+      }
+    }
+
+    return null
+  }
 }
 
 module.exports = FileTree
