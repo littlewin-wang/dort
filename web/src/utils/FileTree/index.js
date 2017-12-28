@@ -201,6 +201,39 @@ class FileTree {
   }
 
   /**
+   * 获取文件夹
+   * @param {string} path 路径
+   * @return {object} 文件夹或者null
+   */
+  getFolder (path = '') {
+    if (typeof path !== 'string') {
+      console.warn('[getFolder]: path is not valid')
+      return false
+    }
+
+    // 将文件路径分级
+    const newPath = this.formatPath(path)
+    const pathArr = newPath.split('/')
+
+    let folders = this.folders
+    let folder
+
+    // 按照路径层层迭代，false即退出循环
+    for (const item of pathArr) {
+      const index = folders.findIndex((folder) => item === folder.name)
+
+      if (index !== -1) {
+        folder = folders[index]
+        folders = folder.folders
+      } else {
+        return null
+      }
+    }
+
+    return folder
+  }
+
+  /**
    * 增加文件[增加路径中不存在的所有文件夹]
    * @param {string} path 路径
    * @param {object} data 添加的参数
