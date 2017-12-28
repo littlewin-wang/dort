@@ -118,7 +118,7 @@ class FileTree {
   /**
    * 删除文件夹
    * @param {string} path 路径
-   * @return {object} 成功或失败
+   * @return {boolean} 成功或失败
    */
   rmFolder (path = '') {
     if (typeof path !== 'string') {
@@ -236,6 +236,67 @@ class FileTree {
     this.updateCount()
 
     return file
+  }
+
+  /**
+   * 删除文件
+   * @param {string} path 路径
+   * @return {boolean} 成功/失败
+   */
+  rmFile (path = '') {
+    if (typeof path !== 'string') {
+      console.warn('[rmFile]: path is not valid')
+      return null
+    }
+
+    // 将文件路径分级
+    const newPath = this.formatPath(path)
+    const pathArr = newPath.split('/')
+
+    // 将最后一级弹出来
+    const pathLast = pathArr.pop()
+
+    let folders = this.folders
+    let folder
+
+    // 按照路径层层迭代，false即退出循环
+    pathArr.every(item => {
+      let find = folders.find(folder => item === folder.name)
+
+      if (find) {
+        folder = find
+        folders = find.folders
+      } else {
+        folder = null
+        folders = null
+      }
+
+      return find
+    })
+
+    // 查找最后一级目录
+    if (folder && folders) {
+      let index = folder.files.findIndex(item => item.name === pathLast)
+
+      // 存在则删除
+      if (index !== -1) {
+        let file = folder.files[index]
+
+        folder.files.splice(index, 1)
+
+        // 执行回调
+        if (file.onRemove && typeof file.onRemove === 'function') {
+          file.onRemove.call(this, file)
+        }
+
+        // 更新统计数据
+        this.updateCount()
+
+        return true
+      }
+    }
+
+    return false
   }
 }
 
