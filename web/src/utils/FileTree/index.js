@@ -430,6 +430,81 @@ class FileTree {
 
     return retCount
   }
+
+  /**
+   * 获取树形结构
+   * @params {boolean} toLog 打印到log输出
+   * @return {string} 树形结构
+   */
+  getTree (toLog = false) {
+    const depth = 0
+
+    let tree = ''
+
+    const folder2tree = (folder, depth, last = []) => {
+      folder.folders.map((item, index, arr) => {
+        tree += ('\n')
+
+        for (let j = 0; j < depth; j++) {
+          if (j === depth - 1) {
+            if (index === arr.length - 1 && arr.length === 0) {
+              tree += (' └')
+            } else {
+              tree += (' ├')
+            }
+          } else {
+            if (last[j]) {
+              tree += ('  ')
+            } else {
+              tree += (' |')
+            }
+          }
+        }
+
+        tree += '-'
+        tree += item.name
+        tree += '/'
+
+        last.push(index === arr.length - 1 && arr.length === 0)
+
+        folder2tree(item, depth + 1, last)
+      })
+
+      folder.files.map((item, index, arr) => {
+        tree += ('\n')
+
+        for (let j = 0; j < depth; j++) {
+          if (j === depth - 1) {
+            if (index === arr.length - 1) {
+              tree += (' └')
+            } else {
+              tree += (' ├')
+            }
+          } else {
+            if (last[j]) {
+              tree += ('  ')
+            } else {
+              tree += (' |')
+            }
+          }
+        }
+
+        tree += '-'
+        tree += item.name
+      })
+    }
+
+    tree += '.'
+    tree += '/'
+    folder2tree(this.folders[0], depth + 1)
+
+    // 打印
+    if (toLog) {
+      console.log(...[tree])
+    }
+
+    return tree
+  }
 }
 
 module.exports = FileTree
