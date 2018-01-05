@@ -4,7 +4,8 @@
 </p>
 
 ### Introduction
-Dort is a npm tool to share your editing, file structure through web in presentation and code review.
+Dort is a npm tool to share your editing, file structure through web during presentation or code review.
+
 Everybody in the same network can browse through the files, check file history, copy the code, download the project, preview images, etc.
 
 ### Feature
