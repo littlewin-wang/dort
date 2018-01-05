@@ -4,21 +4,19 @@
 
 <script>
 import socketIoClient from 'socket.io-client'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'connection',
-  data () {
-    return {
-      project: null
-    }
+  computed: {
+    ...mapGetters('project', ['active'])
   },
   watch: {
-    project: 'handleProject'
+    active: 'handleProject'
   },
   methods: {
+    ...mapActions('project', ['setProjects']),
     handleProject (data) {
-      console.log('watch', data)
-
       // 无效数据退出
       if (!data) {
         return
@@ -45,7 +43,6 @@ export default {
       })
 
       this.projectSocket.on('createVersion', (data) => {
-        console.log(new Date())
         console.log(data)
       })
     }
@@ -61,6 +58,9 @@ export default {
 
     this.projectsSocket.on('update_projects', (data) => {
       console.log('[WEB] - ' + 'projects updated')
+
+      // 更新状态
+      this.setProjects(data)
       console.log(data)
       this.project = data.projects.demo
     })
