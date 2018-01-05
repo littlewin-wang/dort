@@ -16,6 +16,7 @@ export default {
   },
   methods: {
     ...mapActions('project', ['setProjects']),
+    ...mapActions('files', ['setFiles']),
     handleProject (data) {
       // 无效数据退出
       if (!data) {
@@ -27,11 +28,17 @@ export default {
       this.projectSocket = socketIoClient(projectUrl)
 
       this.projectSocket.on('connect', () => {
-        console.log('[WEB] - ' + `project ${data.slug} connected`)
+        if (process.env.NODE_ENV !== 'production') {
+          console.log('[WEB] - ' + `project ${data.slug} connected`)
+        }
       })
 
       this.projectSocket.on('update_project', (data) => {
-        console.log(data)
+        if (process.env.NODE_ENV !== 'production') {
+          console.log('[WEB] - ' + `project ${data.name} updated`)
+        }
+
+        this.setFiles(data.files.files)
       })
 
       this.projectSocket.on('create_file', (data) => {
@@ -53,16 +60,18 @@ export default {
     this.projectsSocket = socketIoClient(projectsUrl)
 
     this.projectsSocket.on('connect', () => {
-      console.log('[WEB] - ' + 'projects connected')
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('[WEB] - ' + 'projects connected')
+      }
     })
 
     this.projectsSocket.on('update_projects', (data) => {
-      console.log('[WEB] - ' + 'projects updated')
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('[WEB] - ' + 'projects updated')
+      }
 
       // 更新状态
       this.setProjects(data)
-      console.log(data)
-      this.project = data.projects.demo
     })
   }
 }

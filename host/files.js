@@ -108,6 +108,8 @@ class Files {
     for (const _filePath in this.files) {
       ret.files.push(this.files[_filePath].describe())
     }
+
+    return ret
   }
 }
 

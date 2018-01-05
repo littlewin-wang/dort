@@ -507,4 +507,4 @@ class FileTree {
   }
 }
 
-module.exports = FileTree
+export default FileTree
