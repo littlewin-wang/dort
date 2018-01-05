@@ -1,7 +1,4 @@
-1111
-34456
-aaa
-666a
-aaaab
-la la-#la
-new line
+123
+abc
+111_&*(
+ -1

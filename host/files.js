@@ -6,7 +6,7 @@ const Paths = require('./paths.js')
 const File = require('./file.js')
 
 class Files {
-  constructor(_config, _options) {
+  constructor (_config, _options) {
     this.config = _config
 
     this.files = {}
@@ -74,7 +74,7 @@ class Files {
 
     const file = this.get(normalizedPath, true)
 
-    if (!!_content) {
+    if (_content) {
       file.createVersion(_content)
     }
 
@@ -87,7 +87,7 @@ class Files {
     let force = !!_force
 
     // 已经存在
-    if (!!this.files[_path]) {
+    if (this.files[_path]) {
       return this.files[_path]
     }
 

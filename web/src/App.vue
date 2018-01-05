@@ -2,16 +2,19 @@
   <div id="app">
     <img src="./assets/logo.png">
     <HelloWorld/>
+    <connection />
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld'
+import connection from './components/connection'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    HelloWorld,
+    connection
   }
 }
 </script>

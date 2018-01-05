@@ -2,7 +2,7 @@
  * client端入口文件
  */
 
-const colors = require('colors')
+require('colors')
 const ip = require('ip')
 const socketIo = require('socket.io')
 
@@ -13,7 +13,7 @@ const Projects = require('./projects.js')
 const packageConfig = require('../package.json')
 
 class App {
-  constructor() {
+  constructor () {
     console.log('---'.rainbow + ' Dort '.bold + packageConfig.version.bold + ' ----------------------'.rainbow)
 
     // 导入配置参数
@@ -70,12 +70,12 @@ class App {
         alias: 'e',
         describe: '需要排除掉的文件',
         default:
-          [
-            '**/.DS_Store',
-            'node_modules/**',
-            'vendor/**',
-            '.git'
-          ],
+        [
+          '**/.DS_Store',
+          'node_modules/**',
+          'vendor/**',
+          '.git'
+        ],
         type: 'array'
       })
       .option('test', {
