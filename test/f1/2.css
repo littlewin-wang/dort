@@ -1,3 +1,9 @@
 .list {
   font-size: 12px;
 }
+
+.table {
+  .cell {
+    line-height: 16px;
+  }
+}

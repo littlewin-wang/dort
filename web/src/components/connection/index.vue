@@ -16,7 +16,7 @@ export default {
   },
   methods: {
     ...mapActions('project', ['setProjects']),
-    ...mapActions('files', ['setFiles']),
+    ...mapActions('files', ['setFiles', 'createFile', 'deleteFile', 'createVersion']),
     handleProject (data) {
       // 无效数据退出
       if (!data) {
@@ -42,15 +42,27 @@ export default {
       })
 
       this.projectSocket.on('create_file', (data) => {
-        console.log(data)
+        if (process.env.NODE_ENV !== 'production') {
+          console.log('[WEB] - ' + `${data.path.full} created`)
+        }
+
+        this.createFile(data)
       })
 
       this.projectSocket.on('delete_file', (data) => {
-        console.log(data)
+        if (process.env.NODE_ENV !== 'production') {
+          console.log('[WEB] - ' + `${data.path.full} deleted`)
+        }
+
+        this.deleteFile(data)
       })
 
       this.projectSocket.on('createVersion', (data) => {
-        console.log(data)
+        if (process.env.NODE_ENV !== 'production') {
+          console.log('[WEB] - ' + `${data.file} updated`)
+        }
+
+        this.createVersion(data)
       })
     }
   },
