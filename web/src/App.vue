@@ -3,18 +3,21 @@
     <img src="./assets/logo.png">
     <HelloWorld/>
     <Connection />
+    <Icon extension="json" />
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld'
 import Connection from './components/Connection'
+import Icon from './components/FileTree/Icon'
 
 export default {
   name: 'app',
   components: {
     HelloWorld,
-    Connection
+    Connection,
+    Icon
   }
 }
 </script>
