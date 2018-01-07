@@ -1,6 +1,6 @@
 <template>
   <div class="file">
-    <a href="" class="name">
+    <a href="" class="name" :style="{ paddingLeft: depth * 20 + 'px' }">
       <Icon class="icon" :extension="content.extension"/>
       <span class="text">
         {{content.name}}
@@ -25,12 +25,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.name {
-  display: block;
-  white-space: nowrap;
+.file {
+  .name {
+    display: block;
+    height: 16px;
+    line-height: 16px;
+    white-space: nowrap;
+    font-size: 14px;
+    color: #fff;
+    text-decoration: none;
 
-  .text {
-    padding: 0 12px
+    .icon {
+      vertical-align: middle;
+      height: 14px;
+    }
+
+    .text {
+      display: inline-block;
+      padding: 0 12px;
+      opacity: .6;
+    }
   }
 }
 </style>

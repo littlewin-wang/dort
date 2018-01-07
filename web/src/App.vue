@@ -1,28 +1,29 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld/>
-    <Connection />
-    <File :content="content" />
+    <div class="menu">
+      <File :content="content" :depth="depth" />
+    </div>
+    <div class="content">
+    </div>
+    <Connection class="socket"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
 import Connection from './components/Connection'
 import File from './components/FileTree/File'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld,
     Connection,
     File
   },
   data () {
     return {
+      depth: 2,
       content: {
-        extension: 'js',
+        extension: 'html',
         name: 'text.js'
       }
     }
@@ -30,13 +31,26 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  .menu {
+    flex: 0 0 250px;
+    background: rgb(28, 28, 29);
+    color: #fff;
+  }
+  .content {
+    flex: 1;
+    background: rgb(23, 23, 23)
+  }
+  .socket {
+    display: none;
+  }
 }
 </style>
+
