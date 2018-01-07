@@ -1,9 +1,9 @@
 <template>
-  <div class="file">
+  <div class="file" v-show="isShow">
     <a href="#" class="name" :class="{ active: activeFile && activeFile.id === content.id }" :style="{ paddingLeft: (depth + 1) * 20 + 'px' }" @click.prevent="setFile(content.path.full)">
       <Icon class="icon" :extension="content.extension"/>
       <span class="text">
-        <span v-for="(item, index) in nameArr" :key="index"><span class="label">{{ item }}</span><b v-if="index !== nameArr.length - 1">{{search}}</b></span>
+        <span v-for="(item, index) in nameArr.arr" :key="index"><span class="label">{{ item }}</span><b v-if="index !== nameArr.arr.length - 1">{{nameArr.keyword}}</b></span>
       </span>
     </a>
   </div>
@@ -25,7 +25,33 @@ export default {
   computed: {
     ...mapGetters('files', ['activeFile', 'search']),
     nameArr () {
-      return this.search ? this.content.name.split(this.search) : [this.content.name]
+      if (this.search) {
+        if (this.search.split('/').indexOf(this.content.name) !== -1) {
+          return {
+            arr: ['', ''],
+            keyword: this.content.name
+          }
+        } else {
+          let keyword = this.search.split('/').pop()
+
+          return {
+            arr: this.content.name.split(keyword),
+            keyword
+          }
+        }
+      } else {
+        return {
+          arr: [this.content.name],
+          keyword: ''
+        }
+      }
+    },
+    isShow () {
+      if (this.search && this.content.path) {
+        return this.content.path.full.indexOf(this.search) !== -1
+      } else {
+        return true
+      }
     }
   },
   methods: {

@@ -1,14 +1,14 @@
 <template>
-  <div class="folder">
+  <div class="folder" v-show="isShow">
     <a href="#" class="name" :style="{ paddingLeft: (depth + 1) * 20 + 'px' }" @click="open = !open">
       <Icon class="icon" :extension="open ? 'folder-active' : 'folder'"/>
       <span class="text">
-        <span v-for="(item, index) in nameArr" :key="index"><span class="label">{{ item }}</span><b v-if="index !== nameArr.length - 1">{{search}}</b></span>
+        <span v-for="(item, index) in nameArr.arr" :key="index"><span class="label">{{ item }}</span><b v-if="index !== nameArr.arr.length - 1">{{nameArr.keyword}}</b></span>
       </span>
     </a>
     <div v-show="open">
-      <Folder v-for="(item, index) in content.folders" :key="'folder -' + index" :content="item" :depth="depth + 1" :directory="fullPath + '/'" />
-      <File v-for="(item, index) in content.files" :key="'file -' + index" :content="item" :depth="depth + 1" />
+      <Folder ref="child" v-for="(item, index) in content.folders" :key="'folder -' + index" :content="item" :depth="depth + 1" :directory="fullPath + '/'" />
+      <File ref="child" v-for="(item, index) in content.files" :key="'file -' + index" :content="item" :depth="depth + 1" />
     </div>
   </div>
 </template>
@@ -43,7 +43,39 @@ export default {
       return `${this.directory}${this.content.name}`
     },
     nameArr () {
-      return this.search ? this.content.name.split(this.search) : [this.content.name]
+      if (this.search) {
+        if (this.search.split('/').indexOf(this.content.name) !== -1) {
+          return {
+            arr: ['', ''],
+            keyword: this.content.name
+          }
+        } else {
+          let keyword = this.search.split('/').pop()
+
+          return {
+            arr: this.content.name.split(keyword),
+            keyword
+          }
+        }
+      } else {
+        return {
+          arr: [this.content.name],
+          keyword: ''
+        }
+      }
+    },
+    isShow () {
+      // 子元素需要显示
+      if (this.$refs.child && this.$refs.child.find(item => item.isShow)) {
+        return true
+      }
+
+      // 根据搜索字判断
+      if (this.search) {
+        return this.nameArr.length > 1
+      } else {
+        return true
+      }
     }
   }
 }
