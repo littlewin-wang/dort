@@ -5,6 +5,7 @@ import App from './App'
 import store from './stores/'
 import 'normalize.css'
 import './styles/index.scss'
+import './styles/icon.scss'
 
 Vue.config.productionTip = false
 
