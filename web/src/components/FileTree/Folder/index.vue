@@ -3,7 +3,7 @@
     <a href="#" class="name" :style="{ paddingLeft: (depth + 1) * 20 + 'px' }" @click="open = !open">
       <Icon class="icon" :extension="open ? 'folder-active' : 'folder'"/>
       <span class="text">
-        {{content.name}}
+        <span v-for="(item, index) in nameArr" :key="index"><span class="label">{{ item }}</span><b v-if="index !== nameArr.length - 1">{{search}}</b></span>
       </span>
     </a>
     <div v-show="open">
@@ -16,6 +16,7 @@
 <script>
 import Icon from '../Icon'
 import File from '../File'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Folder',
@@ -37,8 +38,12 @@ export default {
     }
   },
   computed: {
+    ...mapGetters('files', ['search']),
     fullPath () {
       return `${this.directory}${this.content.name}`
+    },
+    nameArr () {
+      return this.search ? this.content.name.split(this.search) : [this.content.name]
     }
   }
 }
@@ -65,8 +70,14 @@ export default {
     .text {
       display: inline-block;
       padding: 0 12px;
-      opacity: .6;
-      font-weight: 300;
+      .label {
+        opacity: .6;
+        font-weight: 300;
+      }
+      b {
+        color: #ff6;
+        font-weight: bold;
+      }
     }
 
     &:hover {
@@ -75,8 +86,10 @@ export default {
       }
 
       .text {
-        color: #4bd1c5;
-        opacity: 1;
+        .label {
+          color: #4bd1c5;
+          opacity: 1;
+        }
       }
     }
   }

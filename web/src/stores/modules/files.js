@@ -2,12 +2,14 @@ import FileTree from '@/utils/FileTree/'
 
 const state = {
   tree: new FileTree({ rmEmpty: true }),
-  activeFile: null
+  activeFile: null,
+  search: ''
 }
 
 const getters = {
   tree: state => state.tree,
-  activeFile: state => state.activeFile
+  activeFile: state => state.activeFile,
+  search: state => state.search
 }
 
 const actions = {
@@ -28,6 +30,11 @@ const actions = {
   // 当前文件
   setFile ({ commit }, data) {
     commit('SET_FILE', data)
+  },
+
+  // 搜索文件
+  searchFile ({ commit }, data) {
+    commit('SEARCH_FILE', data)
   }
 }
 
@@ -86,6 +93,10 @@ const mutations = {
         state.activeFile.active = true
       }
     }
+  },
+
+  SEARCH_FILE (state, data) {
+    state.search = data
   }
 }
 

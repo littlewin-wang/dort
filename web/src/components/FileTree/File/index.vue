@@ -3,7 +3,7 @@
     <a href="#" class="name" :class="{ active: activeFile && activeFile.id === content.id }" :style="{ paddingLeft: (depth + 1) * 20 + 'px' }" @click.prevent="setFile(content.path.full)">
       <Icon class="icon" :extension="content.extension"/>
       <span class="text">
-        {{content.name}}
+        <span v-for="(item, index) in nameArr" :key="index"><span class="label">{{ item }}</span><b v-if="index !== nameArr.length - 1">{{search}}</b></span>
       </span>
     </a>
   </div>
@@ -23,7 +23,10 @@ export default {
     content: Object
   },
   computed: {
-    ...mapGetters('files', ['activeFile'])
+    ...mapGetters('files', ['activeFile', 'search']),
+    nameArr () {
+      return this.search ? this.content.name.split(this.search) : [this.content.name]
+    }
   },
   methods: {
     ...mapActions('files', ['setFile'])
@@ -51,8 +54,14 @@ export default {
     .text {
       display: inline-block;
       padding: 0 12px;
-      opacity: .6;
-      font-weight: 300;
+      .label {
+        opacity: .6;
+        font-weight: 300;
+      }
+      b {
+        color: #ff6;
+        font-weight: bold;
+      }
     }
 
     &.active {
@@ -61,8 +70,10 @@ export default {
 
     &:hover {
       .text {
-        color: #4bd1c5;
-        opacity: 1;
+        .label {
+          color: #4bd1c5;
+          opacity: 1;
+        }
       }
     }
   }

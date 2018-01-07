@@ -4,7 +4,7 @@
       <p>NO FILE. WAIT FOR LOADING.</p>
     </div>
     <div class="file-container">
-      <input type="text" class="search" v-model="searchInput" placeholder="Search files">
+      <input type="text" class="search" v-model="searchInput" placeholder="Search Input...">
       <div class="content">
         <Folder v-for="(folder, index) in tree.folders" :key="index" :content="folder" :depth="0" />
       </div>
@@ -14,7 +14,7 @@
 
 <script>
 import Folder from './Folder'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'FileTree',
@@ -28,6 +28,12 @@ export default {
   },
   computed: {
     ...mapGetters('files', ['tree'])
+  },
+  watch: {
+    searchInput: 'searchFile'
+  },
+  methods: {
+    ...mapActions('files', ['searchFile'])
   }
 }
 </script>
