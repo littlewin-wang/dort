@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import store from './stores/'
+import 'normalize.css'
 
 Vue.config.productionTip = false
 

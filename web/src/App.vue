@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="menu">
-      <File :content="content" :depth="depth" />
+      <FileTree />
     </div>
     <div class="content">
     </div>
@@ -11,13 +11,13 @@
 
 <script>
 import Connection from './components/Connection'
-import File from './components/FileTree/File'
+import FileTree from './components/FileTree'
 
 export default {
   name: 'app',
   components: {
     Connection,
-    File
+    FileTree
   },
   data () {
     return {
@@ -39,6 +39,7 @@ export default {
   bottom: 0;
   right: 0;
   display: flex;
+  font-family: Helvetica, Arial, sans-serif;
   .menu {
     flex: 0 0 250px;
     background: rgb(28, 28, 29);
