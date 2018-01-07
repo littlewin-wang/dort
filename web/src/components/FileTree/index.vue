@@ -45,9 +45,6 @@ export default {
       line-height: 30px;
       border-bottom: 1px solid rgba(255,255,255,0.2);
     }
-    .content {
-      padding-left: 20px;
-    }
   }
 }
 </style>

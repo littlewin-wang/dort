@@ -1,14 +1,17 @@
 import FileTree from '@/utils/FileTree/'
 
 const state = {
-  tree: new FileTree({ rmEmpty: true })
+  tree: new FileTree({ rmEmpty: true }),
+  activeFile: null
 }
 
 const getters = {
-  tree: state => state.tree
+  tree: state => state.tree,
+  activeFile: state => state.activeFile
 }
 
 const actions = {
+  // 文件更新状态响应
   setFiles ({ commit }, data) {
     commit('SET_FILES', data)
   },
@@ -20,6 +23,11 @@ const actions = {
   },
   createVersion ({ commit }, data) {
     commit('CREATE_VERSION', data)
+  },
+
+  // 当前文件
+  setFile ({ commit }, data) {
+    commit('SET_FILE', data)
   }
 }
 
@@ -57,6 +65,26 @@ const mutations = {
 
     if (file) {
       file.versions.push(data.version)
+    }
+  },
+
+  SET_FILE (state, path) {
+    // 路径不存在
+    if (!path) {
+      if (state.activeFile) {
+        state.activeFile.active = false
+      }
+      state.activeFile = null
+    } else {
+      const file = state.tree.getFile(path)
+      if (!state.activeFile || state.activeFile.id !== file.id) {
+        if (state.activeFile) {
+          state.activeFile.active = false
+        }
+
+        state.activeFile = file
+        state.activeFile.active = true
+      }
     }
   }
 }

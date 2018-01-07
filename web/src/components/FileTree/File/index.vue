@@ -1,6 +1,6 @@
 <template>
   <div class="file">
-    <a href="#" class="name" :style="{ paddingLeft: depth * 20 + 'px' }">
+    <a href="#" class="name" :class="{ active: activeFile && activeFile.id === content.id }" :style="{ paddingLeft: (depth + 1) * 20 + 'px' }" @click.prevent="setFile(content.path.full)">
       <Icon class="icon" :extension="content.extension"/>
       <span class="text">
         {{content.name}}
@@ -11,6 +11,7 @@
 
 <script>
 import Icon from '../Icon'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'File',
@@ -20,6 +21,12 @@ export default {
   props: {
     depth: Number,
     content: Object
+  },
+  computed: {
+    ...mapGetters('files', ['activeFile'])
+  },
+  methods: {
+    ...mapActions('files', ['setFile'])
   }
 }
 </script>
@@ -46,6 +53,17 @@ export default {
       padding: 0 12px;
       opacity: .6;
       font-weight: 300;
+    }
+
+    &.active {
+      background: rgb(48, 48, 54)
+    }
+
+    &:hover {
+      .text {
+        color: #4bd1c5;
+        opacity: 1;
+      }
     }
   }
 }

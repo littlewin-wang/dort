@@ -1,6 +1,6 @@
 <template>
   <div class="folder">
-    <a href="#" class="name" :style="{ paddingLeft: depth * 20 + 'px' }" @click="open = !open">
+    <a href="#" class="name" :style="{ paddingLeft: (depth + 1) * 20 + 'px' }" @click="open = !open">
       <Icon class="icon" :extension="open ? 'folder-active' : 'folder'"/>
       <span class="text">
         {{content.name}}
@@ -57,6 +57,7 @@ export default {
     text-decoration: none;
 
     .icon {
+      opacity: .6;
       width: 12px;
       height: 12px;
     }
@@ -66,6 +67,17 @@ export default {
       padding: 0 12px;
       opacity: .6;
       font-weight: 300;
+    }
+
+    &:hover {
+      .icon {
+        opacity: 1;
+      }
+
+      .text {
+        color: #4bd1c5;
+        opacity: 1;
+      }
     }
   }
 }
