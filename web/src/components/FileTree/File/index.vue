@@ -37,7 +37,6 @@ export default {
     text-decoration: none;
 
     .icon {
-      vertical-align: middle;
       width: 12px;
       height: 12px;
     }

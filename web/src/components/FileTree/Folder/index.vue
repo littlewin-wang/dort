@@ -1,12 +1,12 @@
 <template>
   <div class="folder">
-    <a href="#" class="name" :style="{ paddingLeft: depth * 20 + 'px' }">
-      <Icon class="icon" extension="folder"/>
+    <a href="#" class="name" :style="{ paddingLeft: depth * 20 + 'px' }" @click="open = !open">
+      <Icon class="icon" :extension="open ? 'folder-active' : 'folder'"/>
       <span class="text">
         {{content.name}}
       </span>
     </a>
-    <div>
+    <div v-show="open">
       <Folder v-for="(item, index) in content.folders" :key="'folder -' + index" :content="item" :depth="depth + 1" :directory="fullPath + '/'" />
       <File v-for="(item, index) in content.files" :key="'file -' + index" :content="item" :depth="depth + 1" />
     </div>
@@ -31,6 +31,11 @@ export default {
     },
     content: Object
   },
+  data () {
+    return {
+      open: true
+    }
+  },
   computed: {
     fullPath () {
       return `${this.directory}${this.content.name}`
@@ -52,7 +57,6 @@ export default {
     text-decoration: none;
 
     .icon {
-      vertical-align: middle;
       width: 12px;
       height: 12px;
     }

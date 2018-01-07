@@ -4,11 +4,10 @@
       <p>NO FILE. WAIT FOR LOADING.</p>
     </div>
     <div class="file-container">
-      <input type="text" class="search" v-model="searchInput">
+      <input type="text" class="search" v-model="searchInput" placeholder="Search files">
       <div class="content">
         <Folder v-for="(folder, index) in tree.folders" :key="index" :content="folder" :depth="0" />
       </div>
-      <a class="action" href="">ALL READ</a>
     </div>
   </div>
 </template>
@@ -33,3 +32,22 @@ export default {
 }
 </script>
 
+<style lang="scss" scoped>
+.file-tree {
+  .file-container {
+    .search {
+      display: block;
+      height: 30px;
+      width: 100%;
+      padding-left: 20px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      line-height: 30px;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+    .content {
+      padding-left: 20px;
+    }
+  }
+}
+</style>
