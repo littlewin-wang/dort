@@ -50,10 +50,10 @@ export default {
   right: 0;
   display: flex;
   font-family: Helvetica, Arial, sans-serif;
+  color: #fff;
   .menu {
     flex: 0 0 250px;
     background: rgb(28, 28, 29);
-    color: #fff;
     .title {
       height: 50px;
       h3 {
