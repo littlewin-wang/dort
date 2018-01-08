@@ -11,6 +11,7 @@
       <FileTree class="files" />
     </div>
     <div class="content">
+      <FileContent />
     </div>
     <Connection class="socket"/>
   </div>
@@ -19,12 +20,14 @@
 <script>
 import Connection from './components/Connection'
 import FileTree from './components/FileTree'
+import FileContent from './components/FileContent'
 
 export default {
   name: 'app',
   components: {
     Connection,
-    FileTree
+    FileTree,
+    FileContent
   },
   data () {
     return {

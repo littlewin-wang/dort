@@ -7,6 +7,10 @@ import 'normalize.css'
 import './styles/index.scss'
 import './styles/icon.scss'
 
+// 注册插件
+import VueHighlightJS from 'vue-highlightjs'
+Vue.use(VueHighlightJS)
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
