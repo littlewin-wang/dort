@@ -53,7 +53,7 @@ export default {
   color: #fff;
   .menu {
     flex: 0 0 250px;
-    background: rgb(28, 28, 29);
+    background: rgb(34, 32, 58);
     .title {
       height: 50px;
       h3 {
@@ -69,7 +69,7 @@ export default {
       display: flex;
       justify-content: space-between;
       padding: 0 20px;
-      background: rgb(42, 42, 42);
+      background: rgb(44, 42, 66);
       span {
         line-height: 40px;
         opacity: .6;
@@ -93,7 +93,7 @@ export default {
   }
   .content {
     flex: 1;
-    background: rgb(23, 23, 23)
+    background: rgb(24, 24, 36)
   }
   .socket {
     display: none;
