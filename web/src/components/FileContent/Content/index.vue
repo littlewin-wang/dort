@@ -3,7 +3,7 @@
     <div class="versions">
       <ul v-if="activeFile" class="list">
         <li v-for="(v, index) in activeFile.versions" :key="index">
-          {{v.date}}
+          <Version :version="v"/>
         </li>
       </ul>
     </div>
@@ -17,9 +17,13 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import Version from './Version'
 
 export default {
   name: 'Content',
+  components: {
+    Version
+  },
   computed: {
     ...mapGetters('files', ['activeFile']),
     extension () {
@@ -37,7 +41,7 @@ export default {
   display: flex;
   flex-direction: row;
   .versions {
-    flex: 0 0 150px;
+    flex: 0 0 180px;
     .list {
       margin: 0;
       padding: 0;

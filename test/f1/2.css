@@ -3,7 +3,10 @@
 }
 
 .table {
+  .td {
+    color: white;
+  }
   .cell {
-    line-height: 16px;
+    font-size: 12px;
   }
 }
