@@ -47,9 +47,6 @@ export default {
       padding: 0;
       list-style: none;
       background: rgb(34, 32, 58);
-      li {
-        height: 50px;
-      }
     }
   }
   .content {
