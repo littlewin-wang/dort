@@ -68,7 +68,7 @@ class File {
     this.projectSocket.emit('createVersion', { file: this.path.full, version })
 
     // 保存版本记录
-    this.versions.push(version)
+    this.versions.unshift(version)
 
     if (this.config.debug >= 1) {
       console.log('[file]'.green.bold + ' - ' + `${this.path.full}`.yellow + ' - ' + 'has new version'.cyan + ' - ' + version.date.toLocaleString())

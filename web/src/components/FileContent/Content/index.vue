@@ -56,6 +56,9 @@ export default {
       margin: 0;
       padding: 0;
       list-style: none;
+      li {
+        cursor: pointer;
+      }
       .active {
         background: rgb(34, 32, 58);
       }
@@ -64,6 +67,15 @@ export default {
   .content {
     flex: 1;
     background: rgb(34, 32, 58);
+    pre {
+      outline: none;
+      margin: 0;
+      code {
+        line-height: 20px;
+        font-size: 14px;
+        font-family: 'Roboto Mono', monospace;
+      }
+    }
   }
 }
 </style>
