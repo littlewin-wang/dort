@@ -2,8 +2,8 @@
   <div class="content-container">
     <div class="versions">
       <ul v-if="activeFile" class="list">
-        <li v-for="(v, index) in activeFile.versions" :key="index">
-          <Version :version="v"/>
+        <li v-for="(v, index) in activeFile.versions" :key="index" :class="{ active: index === activeIndex }" @click="changeActive(index)" >
+          <Version :version="v" />
         </li>
       </ul>
     </div>
@@ -24,13 +24,23 @@ export default {
   components: {
     Version
   },
+  data () {
+    return {
+      activeIndex: 0
+    }
+  },
   computed: {
     ...mapGetters('files', ['activeFile']),
     extension () {
       return this.activeFile.extension
     },
     version () {
-      return this.activeFile.versions[0] || { content: '' }
+      return this.activeFile.versions[this.activeIndex] || { content: '' }
+    }
+  },
+  methods: {
+    changeActive (index) {
+      this.activeIndex = index
     }
   }
 }
@@ -46,7 +56,9 @@ export default {
       margin: 0;
       padding: 0;
       list-style: none;
-      background: rgb(34, 32, 58);
+      .active {
+        background: rgb(34, 32, 58);
+      }
     }
   }
   .content {

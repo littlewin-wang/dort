@@ -7,8 +7,8 @@
       </div>
     </div>
     <div class="time">
-      <span>{{date}}</span>
-      <span>{{fromNow}}</span>
+      <span>{{ date }}</span>
+      <span>{{ fromNow }}</span>
     </div>
   </div>
 </template>
@@ -131,7 +131,7 @@ export default {
 
 <style lang="scss" scoped>
 .version {
-  padding: 4px 6px;
+  padding: 8px 12px;
   .info {
     display: flex;
     justify-content: space-between;

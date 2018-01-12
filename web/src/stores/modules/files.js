@@ -71,7 +71,7 @@ const mutations = {
     const file = state.tree.getFile(data.file)
 
     if (file) {
-      file.versions.push(data.version)
+      file.versions.unshift(data.version)
     }
   },
 
