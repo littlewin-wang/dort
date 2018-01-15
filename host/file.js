@@ -6,7 +6,7 @@ const diff = require('diff')
 const ids = require('./ids.js')
 
 class File {
-  constructor(_config, _options) {
+  constructor (_config, _options) {
     // 初始化基本信息
     this.config = _config
     this.id = ids.getId()

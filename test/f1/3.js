@@ -1,8 +1,11 @@
 export default {
-  console.log(a)
   const b = true
 
-  let c = false
+  while (b) {
+    console.log(b)
+  }
+
+  return b
 }
 
 module.xxx = abc
