@@ -12,7 +12,7 @@
         <div class="line">
           <div class="line-part" v-for="(d, index) in diff" :key="index">
             <span v-for="(line, idx) in d.count" :key="idx">{{d.removed ? '' : line + d.startAt}}</span>
-            <div v-if="d.added || d.removed" class="line-bg" :style="{ background: d.added ? '#41ff79' : '#f03'}"></div>
+            <div v-if="(d.added || d.removed) && diff.length > 1" class="line-bg" :style="{ background: d.added ? '#41ff79' : '#f03'}"></div>
           </div>
         </div>
         <pre class="code" v-highlightjs="content" contenteditable><code :class="[ extension ]"></code></pre>

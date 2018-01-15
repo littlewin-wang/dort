@@ -1,7 +1,9 @@
 <template>
   <div class="title" v-if="activeFile">
     <div>
-      <h3>{{activeFile.name}}</h3>
+      <h3>
+        {{ activeFile.path.directory + '/' }}<b>{{ activeFile.name }}</b>
+      </h3>
     </div>
   </div>
 </template>
@@ -25,6 +27,12 @@ export default {
         margin: 0;
         text-align: center;
         line-height: 50px;
+        font-size: 14px;
+        font-weight: 300;
+        color: rgba(255, 255, 255, 0.3);
+        b {
+          color: white
+        }
       }
     }
   }
