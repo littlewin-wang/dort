@@ -1,7 +1,7 @@
 <template>
   <div class="file-content">
-    <Title class="file-title" />
-    <Content class="file-content" />
+    <Title class="file-title" @toggle-history="handleHistory" @toggle-diff="handleDiff" :openHistory="openHistory" :openDiff="openDiff" />
+    <Content class="file-content" :openHistory="openHistory" :openDiff="openDiff" />
   </div>
 </template>
 
@@ -14,6 +14,20 @@ export default {
   components: {
     Title,
     Content
+  },
+  data () {
+    return {
+      openHistory: true,
+      openDiff: true
+    }
+  },
+  methods: {
+    handleHistory () {
+      this.openHistory = !this.openHistory
+    },
+    handleDiff () {
+      this.openDiff = !this.openDiff
+    }
   }
 }
 </script>

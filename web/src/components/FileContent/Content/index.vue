@@ -1,6 +1,6 @@
 <template>
   <div class="content-container">
-    <div class="versions">
+    <div class="versions" v-show="openHistory">
       <ul v-if="activeFile" class="list">
         <li v-for="(v, index) in activeFile.versions" :key="index" :class="{ active: index === activeIndex }" @click="changeActive(index)" >
           <Version :version="v" />
@@ -9,13 +9,18 @@
     </div>
     <div class="content">
       <div v-if="activeFile" class="content-main">
-        <div class="line">
+        <div class="line" v-if="openDiff">
           <div class="line-part" v-for="(d, index) in diff" :key="index">
             <span v-for="(line, idx) in d.count" :key="idx">{{d.removed ? '' : line + d.startAt}}</span>
             <div v-if="(d.added || d.removed) && diff.length > 1" class="line-bg" :style="{ background: d.added ? '#41ff79' : '#f03'}"></div>
           </div>
         </div>
-        <pre class="code" v-highlightjs="content" contenteditable><code :class="[ extension ]"></code></pre>
+        <div class="line" v-else>
+          <div class="line-part">
+            <span v-for="(line, idx) in version.content.split('\n').length" :key="idx">{{ line }}</span>
+          </div>
+        </div>
+        <pre class="code" v-highlightjs="openDiff ? content : version.content" contenteditable><code :class="[ extension ]"></code></pre>
       </div>
     </div>
   </div>
@@ -29,6 +34,16 @@ export default {
   name: 'Content',
   components: {
     Version
+  },
+  props: {
+    openHistory: {
+      type: Boolean,
+      default: true
+    },
+    openDiff: {
+      type: Boolean,
+      default: true
+    }
   },
   data () {
     return {

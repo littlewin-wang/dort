@@ -21,10 +21,14 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'Title',
-  data () {
-    return {
-      openHistory: false,
-      openDiff: false
+  props: {
+    openHistory: {
+      type: Boolean,
+      default: true
+    },
+    openDiff: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
@@ -32,10 +36,10 @@ export default {
   },
   methods: {
     toggleHistory () {
-      this.openHistory = !this.openHistory
+      this.$emit('toggle-history')
     },
     toggleDiff () {
-      this.openDiff = !this.openDiff
+      this.$emit('toggle-diff')
     }
   }
 }
