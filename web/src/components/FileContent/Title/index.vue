@@ -9,8 +9,8 @@
         {{ activeFile.path.directory + '/' }}<b>{{ activeFile.name }}</b>
       </h3>
       <div class="right">
-        <i class="iconfont icon-copy" @click="triggerCopy"></i>
-        <i class="iconfont icon-download"></i>
+        <i class="iconfont icon-copy" @click="handleCopy"></i>
+        <a :href="contentUri" :download="activeFile.name"><i class="iconfont icon-download"></i></a>
       </div>
     </div>
   </div>
@@ -18,6 +18,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
+
+import copyToClipboard from 'copy-to-clipboard'
 
 export default {
   name: 'Title',
@@ -32,7 +34,14 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('files', ['activeFile'])
+    ...mapGetters('files', ['activeFile', 'activeIndex']),
+    contentUri () {
+      if (this.activeFile && this.activeFile.versions && this.activeFile.versions.length) {
+        return `data:text/plain;charset=utf-8,${encodeURIComponent(this.activeFile.versions[this.activeIndex].content)}`
+      } else {
+        return ''
+      }
+    }
   },
   methods: {
     // toggle version history panel
@@ -45,9 +54,13 @@ export default {
       this.$emit('toggle-diff')
     },
 
-    // emit copy event
-    triggerCopy () {
-      this.$emit('copy')
+    // copy content to clipboard
+    handleCopy () {
+      if (this.activeFile && this.activeFile.versions && this.activeFile.versions.length) {
+        copyToClipboard(this.activeFile.versions[this.activeIndex].content)
+      } else {
+        copyToClipboard('')
+      }
     }
   }
 }
