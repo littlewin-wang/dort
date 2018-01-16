@@ -32,6 +32,7 @@ const actions = {
   // 当前文件
   setFile ({ commit }, data) {
     commit('SET_FILE', data)
+    commit('CHNAGE_INDEX', 0)
   },
 
   changeIndex ({ commit }, index) {
@@ -49,6 +50,9 @@ const mutations = {
     state.tree = new FileTree({ rmEmpty: true })
 
     data.length && data.map((file, index) => {
+      file.isNew = false
+      file.isChanged = false
+      file.active = false
       state.tree.addFile(file.path.full, file)
     })
 
@@ -58,6 +62,10 @@ const mutations = {
   },
 
   CREATE_FILE (state, data) {
+    data.isNew = true
+    data.isChanged = false
+    data.active = false
+
     state.tree.addFile(data.path.full, data)
 
     if (process.env.NODE_ENV !== 'production') {
@@ -78,6 +86,7 @@ const mutations = {
 
     if (file) {
       file.versions.unshift(data.version)
+      file.isChanged = true
     }
   },
 
@@ -98,6 +107,9 @@ const mutations = {
         state.activeFile = file
         state.activeFile.active = true
       }
+
+      state.activeFile.isNew = false
+      state.activeFile.isChanged = false
     }
   },
 

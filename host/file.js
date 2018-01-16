@@ -77,7 +77,7 @@ class File {
 
   // 获取之前版本信息
   getLastVersion () {
-    return this.versions.length ? this.versions[this.versions.length - 1] : false
+    return this.versions.length ? this.versions[0] : false
   }
 
   // 指定描述信息
