@@ -22,9 +22,12 @@ export default {
     }
   },
   methods: {
+    // toggle version history panel
     handleHistory () {
       this.openHistory = !this.openHistory
     },
+
+    // toggle diff display
     handleDiff () {
       this.openDiff = !this.openDiff
     }

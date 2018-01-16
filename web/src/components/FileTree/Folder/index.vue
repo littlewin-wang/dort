@@ -65,12 +65,12 @@ export default {
       }
     },
     isShow () {
-      // 子元素需要显示
+      // child node need to display
       if (this.$refs.child && this.$refs.child.find(item => item.isShow)) {
         return true
       }
 
-      // 根据搜索字判断
+      // judge by search input
       if (this.search) {
         return this.nameArr.length > 1
       } else {

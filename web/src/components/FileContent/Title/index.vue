@@ -35,9 +35,12 @@ export default {
     ...mapGetters('files', ['activeFile'])
   },
   methods: {
+    // toggle version history panel
     toggleHistory () {
       this.$emit('toggle-history')
     },
+
+    // toggle diff display
     toggleDiff () {
       this.$emit('toggle-diff')
     }

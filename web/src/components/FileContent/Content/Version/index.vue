@@ -33,6 +33,8 @@ export default {
     date () {
       return this.moment.format('hh:mm')
     },
+
+    // calc diff data
     lines () {
       let ret = {
         'added': 0,
@@ -52,6 +54,8 @@ export default {
 
       return ret
     },
+
+    // add state nodes
     addNodes () {
       let arr = []
 

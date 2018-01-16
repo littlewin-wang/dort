@@ -11,7 +11,7 @@
       <div v-if="activeFile" class="content-main">
         <div class="line" v-if="openDiff">
           <div class="line-part" v-for="(d, index) in diff" :key="index">
-            <span v-for="(line, idx) in d.count" :key="idx">{{d.removed ? '' : line + d.startAt}}</span>
+            <span v-for="(line, idx) in d.lines" :key="idx">{{d.removed ? '' : line + d.startAt}}</span>
             <div v-if="(d.added || d.removed) && diff.length > 1" class="line-bg" :style="{ background: d.added ? '#41ff79' : '#f03'}"></div>
           </div>
         </div>
@@ -56,23 +56,37 @@ export default {
     extension () {
       return this.activeFile.extension
     },
+
+    // active version
     version () {
       return this.activeFile.versions[this.activeIndex] || { content: '' }
     },
+
+    // format diff data
     diff () {
       let index = 0
 
       if (this.version.diff && this.version.diff.length) {
         this.version.diff.map((d, idx) => {
+          // calc start index of every diff part (default part & added part)
           d.startAt = index
           if (!d.removed) {
             index += d.count
+          }
+
+          // calc lines count of every diff part
+          if (idx === this.version.diff.length - 1) {
+            d.lines = d.value.split('\n').length
+          } else {
+            d.lines = d.count
           }
         })
       }
 
       return this.version.diff || []
     },
+
+    // combine every part concent
     content () {
       let content = ''
       if (this.version.diff) {
@@ -85,10 +99,13 @@ export default {
     }
   },
   methods: {
+    // change active version
     changeActive (index) {
       this.activeIndex = index
       this.index = 0
     },
+
+    // add index by number
     indexAdd (number) {
       this.index += number
     }
