@@ -5,7 +5,7 @@ export default {
     console.log(b)
   }
 
-  console.log(b)
+  return b
 }
 
 module.xxx = abc

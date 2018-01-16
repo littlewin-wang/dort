@@ -9,7 +9,7 @@
         {{ activeFile.path.directory + '/' }}<b>{{ activeFile.name }}</b>
       </h3>
       <div class="right">
-        <i class="iconfont icon-copy"></i>
+        <i class="iconfont icon-copy" @click="triggerCopy"></i>
         <i class="iconfont icon-download"></i>
       </div>
     </div>
@@ -43,6 +43,11 @@ export default {
     // toggle diff display
     toggleDiff () {
       this.$emit('toggle-diff')
+    },
+
+    // emit copy event
+    triggerCopy () {
+      this.$emit('copy')
     }
   }
 }

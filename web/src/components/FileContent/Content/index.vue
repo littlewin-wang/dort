@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import Version from './Version'
 
 export default {
@@ -47,12 +47,11 @@ export default {
   },
   data () {
     return {
-      activeIndex: 0,
       index: 0
     }
   },
   computed: {
-    ...mapGetters('files', ['activeFile']),
+    ...mapGetters('files', ['activeFile', 'activeIndex']),
     extension () {
       return this.activeFile.extension
     },
@@ -99,9 +98,10 @@ export default {
     }
   },
   methods: {
+    ...mapActions('files', ['changeIndex']),
     // change active version
     changeActive (index) {
-      this.activeIndex = index
+      this.changeIndex(index)
       this.index = 0
     },
 
