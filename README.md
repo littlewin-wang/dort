@@ -1,5 +1,5 @@
 <p align='center'>
-  <p align='center'><img width='150' src='https://raw.githubusercontent.com/coding-show/dort/master/web/static/images/favicon.png' /></p>
+  <p align='center'><img width='150' src='https://raw.githubusercontent.com/coding-show/dort/master/client/static/images/favicon.png' /></p>
   <p align='center'>File sharing through web with wonderful alternation.</p>
 </p>
 
