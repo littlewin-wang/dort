@@ -4,6 +4,7 @@
       <span class="info-count">{{ lines.added + lines.removed }}</span>
       <div class="info-diff">
         <span v-for="(item, index) in addNodes" :key="index" :class="item.class"></span>
+        <Tooltip position="top">{{lines.added}} addition & {{lines.removed}} deletion</Tooltip>
       </div>
     </div>
     <div class="time">
@@ -15,9 +16,13 @@
 
 <script>
 import moment from 'moment'
+import Tooltip from '../../../Tooltip'
 
 export default {
   name: 'Version',
+  components: {
+    Tooltip
+  },
   props: {
     version: {
       type: Object,
@@ -146,6 +151,7 @@ export default {
       font-weight: 300;
     }
     .info-diff {
+      position: relative;
       span {
         display: inline-block;
         width: 6px;

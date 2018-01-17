@@ -29,13 +29,14 @@ export default {
     left: 0;
     right: 0;
     bottom: 0;
+    z-index: 9;
     .container {
       position: absolute;
       padding: 6px 8px;
       background: #336;
       white-space: nowrap;
       font-size: 13px;
-      line-height: 14px;
+      line-height: 16px;
       pointer-events: none;
       opacity: 0;
       transition: opacity 0.2s;
