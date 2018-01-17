@@ -7,9 +7,9 @@
     "test": "test"
   },
   "scripts": {
-    "demo": "nodemon --watch host host/index.js 'demo' --test true --path /test",
-    "dev": "webpack-dev-server --inline --progress --config web/build/webpack.dev.conf.js",
-    "lint": "eslint --ext .js,.vue ./web/src",
+    "demo": "nodemon --watch lib lib/index.js 'demo' --test true --path /test",
+    "dev": "webpack-dev-server --inline --progress --config client/build/webpack.dev.conf.js",
+    "lint": "eslint --ext .js,.vue ./client/src",
     "build": "node build/build.js",
     "start": "npm-run-all --parallel demo dev"
   },

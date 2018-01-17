@@ -8,7 +8,7 @@
     </a>
     <div v-show="open">
       <Folder ref="child" v-for="(item, index) in content.folders" :key="'folder -' + index" :content="item" :depth="depth + 1" :directory="fullPath + '/'" />
-      <File ref="child" v-for="(item, index) in content.files" :key="'file -' + index" :content="item" :depth="depth + 1" />
+      <File ref="child" v-for="(item, index) in content.files.concat().sort((a, b) => a.name > b.name)" :key="'file -' + index" :content="item" :depth="depth + 1" />
     </div>
   </div>
 </template>
