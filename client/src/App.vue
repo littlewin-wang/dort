@@ -6,7 +6,9 @@
       </div>
       <div class="project">
         <span>demo</span>
-        <i class="iconfont icon-download"></i>
+        <i class="iconfont icon-download">
+          <Tooltip position="right">Download current project</Tooltip>
+        </i>
       </div>
       <FileTree class="files" />
     </div>
@@ -21,13 +23,15 @@
 import Connection from './components/Connection'
 import FileTree from './components/FileTree'
 import FileContent from './components/FileContent'
+import Tooltip from './components/Tooltip'
 
 export default {
   name: 'app',
   components: {
     Connection,
     FileTree,
-    FileContent
+    FileContent,
+    Tooltip
   },
   data () {
     return {
@@ -77,13 +81,13 @@ export default {
         font-weight: 300;
       }
       i {
+        position: relative;
         cursor: pointer;
         line-height: 40px;
         font-size: 20px;
-        opacity: .6;
+        color: rgba(255, 255, 255, .6);
         &:hover {
           color: #4bd1c5;
-          opacity: 1;
         }
       }
     }

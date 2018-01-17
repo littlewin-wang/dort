@@ -2,15 +2,25 @@
   <div class="title" v-if="activeFile">
     <div class="title-main">
       <div class="left">
-        <i class="iconfont icon-history" :class="{ active: openHistory }" @click="toggleHistory"></i>
-        <i class="iconfont icon-diff" :class="{ active: openDiff }" @click="toggleDiff"></i>
+        <i class="iconfont icon-history" :class="{ active: openHistory }" @click="toggleHistory">
+          <Tooltip position="bottom">Toggle versions panel</Tooltip>
+        </i>
+        <i class="iconfont icon-diff" :class="{ active: openDiff }" @click="toggleDiff">
+          <Tooltip position="bottom">Toggle diff display</Tooltip>
+        </i>
       </div>
       <h3>
         {{ activeFile.path.directory + '/' }}<b>{{ activeFile.name }}</b>
       </h3>
       <div class="right">
-        <i class="iconfont icon-copy" @click="handleCopy"></i>
-        <a :href="contentUri" :download="activeFile.name"><i class="iconfont icon-download"></i></a>
+        <i class="iconfont icon-copy" @click="handleCopy">
+          <Tooltip position="bottom">Copy to clipboard</Tooltip>
+        </i>
+        <a :href="contentUri" :download="activeFile.name">
+          <i class="iconfont icon-download">
+            <Tooltip position="left">Download current version</Tooltip>
+          </i>
+        </a>
       </div>
     </div>
   </div>
@@ -18,11 +28,15 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import Tooltip from '../../Tooltip'
 
 import copyToClipboard from 'copy-to-clipboard'
 
 export default {
   name: 'Title',
+  components: {
+    Tooltip
+  },
   props: {
     openHistory: {
       type: Boolean,
@@ -87,6 +101,7 @@ export default {
       .left, .right {
         font-size: 0;
         i {
+          position: relative;
           display: inline-block;
           width: 50px;
           height: 50px;
