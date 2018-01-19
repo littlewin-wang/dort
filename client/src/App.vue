@@ -6,9 +6,11 @@
       </div>
       <div class="project">
         <span>demo</span>
-        <i class="iconfont icon-download">
+        <a :href="zipUrl" download="test.zip">
+          <i class="iconfont icon-download">
           <Tooltip position="right">Download current project</Tooltip>
         </i>
+        </a>
       </div>
       <FileTree class="files" />
     </div>
@@ -24,6 +26,7 @@ import Connection from './components/Connection'
 import FileTree from './components/FileTree'
 import FileContent from './components/FileContent'
 import Tooltip from './components/Tooltip'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'app',
@@ -33,12 +36,13 @@ export default {
     FileContent,
     Tooltip
   },
-  data () {
-    return {
-      depth: 2,
-      content: {
-        extension: 'html',
-        name: 'text.js'
+  computed: {
+    ...mapGetters('project', ['active']),
+    zipUrl () {
+      if (this.active) {
+        return `http://localhost:4574/${this.active.slug}/download`
+      } else {
+        return '#'
       }
     }
   }
@@ -80,14 +84,17 @@ export default {
         font-size: 14px;
         font-weight: 300;
       }
-      i {
-        position: relative;
-        cursor: pointer;
-        line-height: 40px;
-        font-size: 20px;
-        color: rgba(255, 255, 255, .6);
-        &:hover {
-          color: #4bd1c5;
+      a {
+        text-decoration: none;
+        i {
+          position: relative;
+          cursor: pointer;
+          line-height: 40px;
+          font-size: 20px;
+          color: rgba(255, 255, 255, .6);
+          &:hover {
+            color: #4bd1c5;
+          }
         }
       }
     }
