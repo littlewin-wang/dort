@@ -5,12 +5,22 @@
         <h3>Dort</h3>
       </div>
       <div class="project">
-        <span>demo</span>
-        <a :href="zipUrl" download="test.zip">
-          <i class="iconfont icon-download">
-          <Tooltip position="right">Download current project</Tooltip>
-        </i>
-        </a>
+        <span>{{ active ? active.name : '' }}</span>
+        <div class="action">
+          <a :href="zipUrl" download="test.zip">
+            <i class="iconfont icon-download">
+              <Tooltip position="right">Download current project</Tooltip>
+            </i>
+          </a>
+          <i class="iconfont direction" :class="this.listShow ? 'icon-up': 'icon-down'" v-if="all.projects && Object.keys(all.projects).length > 1" @click="toggleList">
+            <Tooltip position="right">List all projects</Tooltip>
+          </i>
+        </div>
+        <div class="list" v-if="all.projects" v-show="listShow">
+          <div class="item" v-for="(project, index) in all.projects" :key="index" @click="changeActive(project)">
+            <span>{{ project.name }}</span>
+          </div>
+        </div>
       </div>
       <FileTree class="files" />
     </div>
@@ -26,7 +36,7 @@ import Connection from './components/Connection'
 import FileTree from './components/FileTree'
 import FileContent from './components/FileContent'
 import Tooltip from './components/Tooltip'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'app',
@@ -36,14 +46,29 @@ export default {
     FileContent,
     Tooltip
   },
+  data () {
+    return {
+      listShow: false
+    }
+  },
   computed: {
-    ...mapGetters('project', ['active']),
+    ...mapGetters('project', ['active', 'all']),
     zipUrl () {
       if (this.active) {
         return `http://localhost:4574/${this.active.slug}/download`
       } else {
         return '#'
       }
+    }
+  },
+  methods: {
+    ...mapActions('project', ['setProject']),
+    toggleList () {
+      this.listShow = !this.listShow
+    },
+    changeActive (data) {
+      this.setProject(data)
+      this.listShow = false
     }
   }
 }
@@ -75,6 +100,7 @@ export default {
     .project {
       height: 40px;
       display: flex;
+      position: relative;
       justify-content: space-between;
       padding: 0 20px;
       background: rgb(44, 42, 66);
@@ -86,14 +112,36 @@ export default {
       }
       a {
         text-decoration: none;
-        i {
-          position: relative;
+      }
+      i {
+        position: relative;
+        cursor: pointer;
+        line-height: 40px;
+        font-size: 20px;
+        color: rgba(255, 255, 255, .6);
+        &:hover {
+          color: #4bd1c5;
+        }
+      }
+      .direction {
+        font-size: 14px;
+      }
+      .list {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 40px;
+        background: #181824;
+        opacity: .8;
+        z-index: 9;
+        .item {
+          padding: 0 20px;
           cursor: pointer;
-          line-height: 40px;
-          font-size: 20px;
-          color: rgba(255, 255, 255, .6);
           &:hover {
-            color: #4bd1c5;
+            background: rgb(44, 42, 66);
+            span {
+              color: #4bd1c5;
+            }
           }
         }
       }

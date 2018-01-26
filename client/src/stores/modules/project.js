@@ -44,6 +44,10 @@ const mutations = {
         state.active = state.all.projects[keys[0]]
       }
     }
+  },
+
+  SET_PROJECT (state, data) {
+    state.active = data
   }
 }
 
