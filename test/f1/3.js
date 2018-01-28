@@ -7,8 +7,8 @@ export default {
     console.log(a)
   }
 
-  return b
-  // console.log(b)
+  // return b
+  console.log(b)
 }
 
 module.xxx = abc

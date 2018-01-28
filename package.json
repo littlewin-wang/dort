@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "demo": "nodemon --watch lib lib/index.js 'demo' --test true --path /test",
+    "demo": "nodemon --watch lib lib/index.js 'demo' --test true --path /test/f2",
     "demo-1": "nodemon --watch lib lib/index.js 'demo-1' --test true --path /test/f1",
     "dev": "webpack-dev-server --inline --progress --config client/build/webpack.dev.conf.js",
     "lint": "eslint --ext .js,.vue ./client/src",
@@ -49,6 +49,7 @@
     "socket.io-client": "^2.0.4",
     "vue": "^2.5.2",
     "vue-highlightjs": "^1.3.3",
+    "vue-js-modal": "^1.3.9",
     "vuex": "^3.0.1",
     "yargs": "^10.0.3"
   },
