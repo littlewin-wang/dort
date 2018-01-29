@@ -2,7 +2,7 @@
   <div id="app">
     <div class="menu">
       <div class="title">
-        <h3>Dort</h3>
+        <h3 class="label" @click="resetIndex">Dort</h3>
         <i class="iconfont icon-info" @click="showModal"></i>
       </div>
       <div class="project">
@@ -26,7 +26,8 @@
       <FileTree class="files" />
     </div>
     <div class="content">
-      <FileContent />
+      <FileContent v-if="activeFile" />
+      <Index v-else />
     </div>
     <modal name="info" :width="300" :minHeight="300">
       <div class="info">
@@ -54,6 +55,7 @@
 <script>
 import Connection from './components/Connection'
 import FileTree from './components/FileTree'
+import Index from './components/Index'
 import FileContent from './components/FileContent'
 import Tooltip from './components/Tooltip'
 import { mapGetters, mapActions } from 'vuex'
@@ -63,6 +65,7 @@ export default {
   components: {
     Connection,
     FileTree,
+    Index,
     FileContent,
     Tooltip
   },
@@ -73,6 +76,7 @@ export default {
   },
   computed: {
     ...mapGetters('project', ['active', 'all']),
+    ...mapGetters('files', ['activeFile']),
     zipUrl () {
       if (this.active) {
         return `http://localhost:4574/${this.active.slug}/download`
@@ -83,6 +87,7 @@ export default {
   },
   methods: {
     ...mapActions('project', ['setProject']),
+    ...mapActions('files', ['setFile']),
     toggleList () {
       this.listShow = !this.listShow
     },
@@ -92,6 +97,9 @@ export default {
     },
     showModal () {
       this.$modal.show('info')
+    },
+    resetIndex () {
+      this.setFile(null)
     }
   }
 }
@@ -119,6 +127,7 @@ export default {
         line-height: 50px;
         font-size: 28px;
         font-weight: 300;
+        cursor: pointer;
       }
       i {
         position: absolute;
