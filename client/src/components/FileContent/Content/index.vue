@@ -162,6 +162,9 @@ export default {
     flex: 1;
     background: rgb(34, 32, 58);
     .content-main {
+      .is-image {
+        text-align: center;
+      }
       .is-code {
         display: flex;
         .line {
