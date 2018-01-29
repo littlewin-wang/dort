@@ -57,6 +57,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['server']),
     ...mapGetters('files', ['activeFile', 'activeIndex']),
     ...mapGetters('project', ['active']),
     extension () {
@@ -113,7 +114,7 @@ export default {
     },
 
     imgUrl () {
-      return `http://localhost:4574/${this.active.slug}/files/${this.activeFile.path.full}`
+      return `${this.server.domain}/${this.active.slug}/files/${this.activeFile.path.full}`
     }
   },
   methods: {

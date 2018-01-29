@@ -1,14 +1,14 @@
 {
   "name": "dort",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "File sharing through web with wonderful alternation.",
-  "main": "index.js",
-  "directories": {
-    "test": "test"
+  "main": "bin/index.js",
+  "bin": {
+    "dort": "bin/index.js"
   },
   "scripts": {
-    "demo": "nodemon --watch lib lib/index.js 'demo' --test true --path /test/f2",
-    "demo-1": "nodemon --watch lib lib/index.js 'demo-1' --test true --path /test/f1",
+    "demo": "nodemon --watch lib bin/index.js 'demo' --test true --path /test/f1",
+    "demo-2": "nodemon --watch lib bin/index.js 'demo-2' --test true --path /test/f2",
     "dev": "webpack-dev-server --inline --progress --config client/build/webpack.dev.conf.js",
     "lint": "eslint --ext .js,.vue ./client/src",
     "build": "node build/build.js",

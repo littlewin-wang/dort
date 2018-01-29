@@ -10,5 +10,21 @@ export default new Vuex.Store({
   modules: {
     files,
     project
+  },
+  state: {
+    server: null
+  },
+  getters: {
+    server: state => state.server
+  },
+  mutations: {
+    SET_SERVER (state, data) {
+      state.server = data
+    }
+  },
+  actions: {
+    setServer ({ commit }, data) {
+      commit('SET_SERVER', data)
+    }
   }
 })

@@ -48,13 +48,14 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['server']),
     ...mapGetters('files', ['activeFile', 'activeIndex']),
     ...mapGetters('project', ['active']),
     contentUri () {
       if (this.activeFile && this.activeFile.versions && this.activeFile.versions.length) {
         return `data:text/plain;charset=utf-8,${encodeURIComponent(this.activeFile.versions[this.activeIndex].content)}`
       } else {
-        return `http://localhost:4574/${this.active.slug}/files/${this.activeFile.path.full}`
+        return `${this.server.domain}/${this.active.slug}/files/${this.activeFile.path.full}`
       }
     }
   },
@@ -74,7 +75,7 @@ export default {
       if (this.activeFile && this.activeFile.versions && this.activeFile.versions.length) {
         copyToClipboard(this.activeFile.versions[this.activeIndex].content)
       } else {
-        copyToClipboard(`http://localhost:4574/${this.active.slug}/files/${this.activeFile.path.full}`)
+        copyToClipboard(`${this.server.domain}/${this.active.slug}/files/${this.activeFile.path.full}`)
       }
     }
   }

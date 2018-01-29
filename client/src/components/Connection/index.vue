@@ -15,6 +15,7 @@ export default {
     active: 'handleProject'
   },
   methods: {
+    ...mapActions(['setServer']),
     ...mapActions('project', ['setProjects']),
     ...mapActions('files', ['setFiles', 'createFile', 'deleteFile', 'createVersion']),
     handleProject (data) {
@@ -68,13 +69,17 @@ export default {
   },
   created () {
     // 建立socket连接
-    const projectsUrl = 'http://localhost:4574/projects'
+    const projectsUrl = `${process.env.NODE_ENV === 'production' ? '' : 'http://localhost:4574'}/projects`
     this.projectsSocket = socketIoClient(projectsUrl)
 
     this.projectsSocket.on('connect', () => {
       if (process.env.NODE_ENV !== 'production') {
         console.log('[WEB] - ' + 'projects connected')
       }
+    })
+
+    this.projectsSocket.on('config', (data) => {
+      this.setServer(data)
     })
 
     this.projectsSocket.on('update_projects', (data) => {

@@ -75,11 +75,12 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['server']),
     ...mapGetters('project', ['active', 'all']),
     ...mapGetters('files', ['activeFile']),
     zipUrl () {
       if (this.active) {
-        return `http://localhost:4574/${this.active.slug}/download`
+        return `${this.server.domain}/${this.active.slug}/download`
       } else {
         return '#'
       }
