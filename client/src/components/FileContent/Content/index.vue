@@ -2,6 +2,7 @@
   <div class="content-container">
     <div class="versions" v-show="openHistory">
       <ul v-if="activeFile" class="list">
+        <h5 v-if="activeFile.versions && !activeFile.versions.length">No versions</h5>
         <li v-for="(v, index) in activeFile.versions" :key="index" :class="{ active: index === activeIndex }" @click="changeActive(index)" >
           <Version :version="v" />
         </li>
@@ -54,6 +55,14 @@ export default {
     ...mapGetters('files', ['activeFile', 'activeIndex']),
     extension () {
       return this.activeFile.extension
+    },
+
+    isImage () {
+      return ['jpg', 'jpeg', 'png', 'tiff', 'gif', 'webp'].indexOf(this.extension) !== -1
+    },
+
+    isCode () {
+      return this.activeFile.versions && this.activeFile.versions.length > 0
     },
 
     // active version
@@ -120,6 +129,14 @@ export default {
   .versions {
     flex: 0 0 180px;
     .list {
+      h5 {
+        margin: 0;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        font-weight: 300;
+        color: rgba(255, 255, 255, .6)
+      }
       margin: 0;
       padding: 0;
       list-style: none;
