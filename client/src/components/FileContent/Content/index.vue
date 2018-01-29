@@ -11,7 +11,7 @@
     <div class="content">
       <div v-if="activeFile" class="content-main">
         <div class="is-image" v-if="isImage">
-          <img :src="imgUrl" :alt="activeFile.name">
+          <img :src="imgUrl" :alt="activeFile.name" style="font-size: 14px; font-weight: 300">
         </div>
         <div class="is-code" v-if="isCode">
           <div class="line" v-if="openDiff">

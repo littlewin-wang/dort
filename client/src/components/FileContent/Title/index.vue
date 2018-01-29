@@ -18,7 +18,7 @@
         </i>
         <a :href="contentUri" :download="activeFile.name">
           <i class="iconfont icon-download">
-            <Tooltip position="left">Download current version</Tooltip>
+            <Tooltip position="left">Download the file</Tooltip>
           </i>
         </a>
       </div>
@@ -49,11 +49,12 @@ export default {
   },
   computed: {
     ...mapGetters('files', ['activeFile', 'activeIndex']),
+    ...mapGetters('project', ['active']),
     contentUri () {
       if (this.activeFile && this.activeFile.versions && this.activeFile.versions.length) {
         return `data:text/plain;charset=utf-8,${encodeURIComponent(this.activeFile.versions[this.activeIndex].content)}`
       } else {
-        return ''
+        return `http://localhost:4574/${this.active.slug}/files/${this.activeFile.path.full}`
       }
     }
   },
@@ -73,7 +74,7 @@ export default {
       if (this.activeFile && this.activeFile.versions && this.activeFile.versions.length) {
         copyToClipboard(this.activeFile.versions[this.activeIndex].content)
       } else {
-        copyToClipboard('')
+        copyToClipboard(`http://localhost:4574/${this.active.slug}/files/${this.activeFile.path.full}`)
       }
     }
   }
