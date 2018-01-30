@@ -25,7 +25,7 @@
               <span v-for="(line, idx) in version.content.split('\n').length" :key="idx">{{ line }}</span>
             </div>
           </div>
-          <pre class="code" v-highlightjs="openDiff ? content : version.content" contenteditable><code :class="[ extension ]"></code></pre>
+          <pre class="code" v-highlightjs="openDiff ? content : version.content"><code :class="[ extension ]"></code></pre>
         </div>
       </div>
     </div>
@@ -161,8 +161,12 @@ export default {
   }
   .content {
     flex: 1;
+    overflow: auto;
+    margin-right: -15px;
+    margin-bottom: -15px;
     background: rgb(34, 32, 58);
     .content-main {
+      overflow: auto;
       .is-image {
         text-align: center;
       }
@@ -184,7 +188,7 @@ export default {
               left: 0;
               top: 0;
               height: 100%;
-              width: calc(100vw - 250px - 180px);
+              width: 9999px;
               opacity: .4;
               pointer-events: none;
             }

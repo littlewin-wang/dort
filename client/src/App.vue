@@ -198,6 +198,7 @@ export default {
   }
   .content {
     flex: 1;
+    overflow: hidden;
     background: rgb(24, 24, 36)
   }
   .socket {
