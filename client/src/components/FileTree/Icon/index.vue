@@ -67,6 +67,8 @@ export default {
         }
       }
 
+      ret.path = ret.path || require('./icons/random.svg')
+
       return ret
     }
   }
