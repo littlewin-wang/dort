@@ -1,0 +1,13 @@
+client/dist/static/js/*.map
+client/build/
+client/config/
+client/src/
+client/static/
+client/index.html
+
+.editorconfig
+.eslintrc.js
+.gitignore
+.npmignore
+.package-lock.json
+.package.json
