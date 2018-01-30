@@ -7,11 +7,10 @@
     "dort": "bin/index.js"
   },
   "scripts": {
-    "demo": "nodemon --watch lib bin/index.js 'demo' --test true --path /test/f1",
-    "demo-2": "nodemon --watch lib bin/index.js 'demo-2' --test true --path /test/f2",
-    "dev": "webpack-dev-server --inline --progress --config client/build/webpack.dev.conf.js",
+    "demo": "nodemon --watch lib bin/index.js 'demo' --test true --path /test",
     "lint": "eslint --ext .js,.vue ./client/src",
-    "build": "node build/build.js",
+    "dev": "webpack-dev-server --inline --progress --config client/build/webpack.dev.conf.js",
+    "build": "node client/build/build.js",
     "start": "npm-run-all --parallel demo dev"
   },
   "repository": {

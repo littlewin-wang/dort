@@ -9,7 +9,7 @@
       Dort - <span>File sharing in amazing way</span>
     </div>
     <div class='link'>
-      <a href="#">http://localhost:4574</a>
+      <a target="_blank" rel="external nofollow" :href="domain">{{ domain }}</a>
       <span>(In same network)</span>
     </div>
     <div class='slogan'>
@@ -17,6 +17,20 @@
     </div>
   </div>
 </template>
+
+<script>
+import { mapGetters } from 'vuex'
+
+export default {
+  computed: {
+    ...mapGetters(['server']),
+    domain () {
+      return this.server ? this.server.domain : ''
+    }
+  }
+}
+</script>
+
 
 <style lang="scss" scoped>
 .container {

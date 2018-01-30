@@ -9,6 +9,7 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'connection',
   computed: {
+    ...mapGetters(['server']),
     ...mapGetters('project', ['active'])
   },
   watch: {
@@ -25,7 +26,7 @@ export default {
       }
 
       // 建立到当前project的连接
-      const projectUrl = `http://localhost:4574/project/${data.slug}`
+      const projectUrl = `${this.server.domain}/project/${data.slug}`
       this.projectSocket = socketIoClient(projectUrl)
 
       this.projectSocket.on('connect', () => {
