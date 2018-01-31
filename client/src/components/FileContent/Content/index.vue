@@ -188,13 +188,14 @@ export default {
               left: 0;
               top: 0;
               height: 100%;
-              width: 9999px;
+              width: calc(100vw - 250px - 180px);
               opacity: .4;
               pointer-events: none;
             }
           }
         }
         pre {
+          overflow: auto;
           outline: none;
           margin: 0;
           code {
