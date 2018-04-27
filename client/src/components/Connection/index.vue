@@ -10,7 +10,8 @@ export default {
   name: 'connection',
   computed: {
     ...mapGetters(['server']),
-    ...mapGetters('project', ['active'])
+    ...mapGetters('project', ['active']),
+    ...mapGetters('chat', ['preUser', 'preMessage'])
   },
   watch: {
     active: 'handleProject'
@@ -19,13 +20,28 @@ export default {
     ...mapActions(['setServer']),
     ...mapActions('project', ['setProjects']),
     ...mapActions('files', ['setFiles', 'createFile', 'deleteFile', 'createVersion']),
+    ...mapActions('chat', ['emptyMessages', 'updateUser', 'createMessage']),
     handleProject (data) {
       // 无效数据退出
       if (!data) {
         return
       }
 
-      // 建立到当前project的连接
+      // reset files & messages
+      this.setFiles([])
+      this.emptyMessages()
+
+      // reset connection to project
+      if (this.projectSocket) {
+        this.projectSocket.off('connect')
+        this.projectSocket.off('update_project')
+        this.projectSocket.off('create_file')
+        this.projectSocket.off('delete_file')
+        this.projectSocket.off('createVersion')
+        this.projectSocket.disconnect()
+      }
+
+      // build a new connection of project
       const projectUrl = `${this.server.domain}/project/${data.slug}`
       this.projectSocket = socketIoClient(projectUrl)
 
@@ -65,6 +81,29 @@ export default {
         }
 
         this.createVersion(data)
+      })
+
+      // reset connection of chat
+      if (this.chatSocket) {
+        this.chatSocket.off('connect')
+        this.chatSocket.off('user')
+        this.chatSocket.off('message')
+        this.projectSocket.disconnect()
+      }
+
+      const chatUrl = `${this.server.domain}/project/${data.slug}/chat`
+      this.chatSocket = socketIoClient(chatUrl)
+
+      this.chatSocket.on('connect', () => {
+        console.log('[WEB] - ' + `project ${data.slug} chat connected`)
+      })
+
+      this.chatSocket.on('user', (data) => {
+        this.updateUser(data)
+      })
+
+      this.chatSocket.on('message', (data) => {
+        this.createMessage(data)
       })
     }
   },
