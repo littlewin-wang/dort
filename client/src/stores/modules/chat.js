@@ -9,7 +9,7 @@ const state = {
 }
 
 const getters = {
-  open: state => state.tree,
+  open: state => state.open,
   user: state => state.user,
   preUser: state => state.activeUser,
   messages: state => state.messages,

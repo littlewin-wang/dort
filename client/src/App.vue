@@ -29,6 +29,10 @@
       <FileContent v-if="activeFile" />
       <Index v-else />
     </div>
+    <div class="chat">
+      <Chat></Chat>
+    </div>
+
     <modal name="info" :width="300" :minHeight="300">
       <div class="info">
         <h5>Dort <span>1.0.0</span></h5>
@@ -48,6 +52,7 @@
         </ul>
       </div>
     </modal>
+
     <Connection class="socket"/>
   </div>
 </template>
@@ -57,6 +62,7 @@ import Connection from './components/Connection'
 import FileTree from './components/FileTree'
 import Index from './components/Index'
 import FileContent from './components/FileContent'
+import Chat from './components/Chat'
 import Tooltip from './components/Tooltip'
 import { mapGetters, mapActions } from 'vuex'
 
@@ -67,7 +73,8 @@ export default {
     FileTree,
     Index,
     FileContent,
-    Tooltip
+    Tooltip,
+    Chat
   },
   data () {
     return {
@@ -200,6 +207,11 @@ export default {
     flex: 1;
     overflow: hidden;
     background: rgb(24, 24, 36)
+  }
+  .chat {
+    position: absolute;
+    right: 0;
+    bottom: 0;
   }
   .socket {
     display: none;
