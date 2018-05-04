@@ -5,11 +5,11 @@
       <h5>
         <span>Project Chat</span>
         <i class="iconfont" :class="`icon-${open ? 'down' : 'up'}`"></i>
-        <div class="unread" v-if="unread > 0">{{unread}}</div>
+        <div class="unread" v-if="unread > 0 && !open">{{unread}}</div>
       </h5>
     </div>
     <div class="box" v-if="open">
-      <div class="content" ref="container">
+      <div class="content" ref="container" @scroll="handleScroll">
         <div class="item-list" ref="inner">
           <div class="item" v-for="msg in messages" :key="msg.id">
             <div class="state" :style="{background: msg.user.color}"></div>
@@ -49,18 +49,39 @@ export default {
   data () {
     return {
       name: '',
-      content: ''
+      content: '',
+      isBottom: true
     }
   },
   computed: {
-    ...mapGetters('chat', ['open', 'user', 'messages', 'unread']),
+    ...mapGetters('chat', ['unread']),
+    open () {
+      return this.$store.state.chat.open
+    },
     user () {
       return this.$store.state.chat.user
+    },
+    messages () {
+      return this.$store.state.chat.messages
     }
   },
   watch: {
+    open (value) {
+      if (value) {
+        window.requestAnimationFrame(() => {
+          this.handleBottom()
+        })
+      }
+    },
     user (value) {
       this.name = value.name
+    },
+    messages () {
+      window.requestAnimationFrame(() => {
+        if (this.isBottom) {
+          this.handleBottom()
+        }
+      })
     }
   },
   methods: {
@@ -97,6 +118,11 @@ export default {
           this.handleBottom()
         }
       }
+    },
+
+    // update isBottom when scroll
+    handleScroll () {
+      this.isBottom = (this.$refs.container.scrollTop + this.$refs.container.offsetHeight >= this.$refs.inner.offsetHeight + 15)
     }
   }
 }
