@@ -11,7 +11,7 @@
       <div class="input">
         <div class="name">
           <span>Nickname assign to you is </span>
-          <input type="text" :value="user.name" :style="{color: user.color}">
+          <input type="text" v-model="name" :style="{color: user.color}" @change="handleName($event)">
         </div>
         <div class="textarea">
           <textarea placeholder="Type the words here..." />
@@ -26,11 +26,27 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Chat',
+  data () {
+    return {
+      name: ''
+    }
+  },
   computed: {
-    ...mapGetters('chat', ['open', 'user'])
+    ...mapGetters('chat', ['open', 'user']),
+    user () {
+      return this.$store.state.chat.user
+    }
+  },
+  watch: {
+    user (value) {
+      this.name = value.name
+    }
   },
   methods: {
-    ...mapActions('chat', ['toggleChat'])
+    ...mapActions('chat', ['toggleChat', 'setUser']),
+    handleName (event) {
+      this.setUser({name: event.target.value})
+    }
   }
 }
 </script>

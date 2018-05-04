@@ -4,17 +4,27 @@
 
 <script>
 import socketIoClient from 'socket.io-client'
-import { mapGetters, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'connection',
   computed: {
-    ...mapGetters(['server']),
-    ...mapGetters('project', ['active']),
-    ...mapGetters('chat', ['preUser', 'preMessage'])
+    server () {
+      return this.$store.state.server
+    },
+    active () {
+      return this.$store.state.project.active
+    },
+    preUser () {
+      return this.$store.state.chat.preUser
+    },
+    preMessage () {
+      return this.$store.state.chat.preMessage
+    }
   },
   watch: {
-    active: 'handleProject'
+    active: 'handleProject',
+    preUser: 'handlePreUser'
   },
   methods: {
     ...mapActions(['setServer']),
@@ -105,6 +115,9 @@ export default {
       this.chatSocket.on('message', (data) => {
         this.createMessage(data)
       })
+    },
+    handlePreUser (data) {
+      data && this.chatSocket.emit('update_user', data)
     }
   },
   created () {
