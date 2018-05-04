@@ -1,21 +1,25 @@
 <template>
   <div class="chat-container">
     <div class="label" @click="toggleChat">
+      <Tooltip position="left" v-if="!open">Discuss this project with other prople</Tooltip>
       <h5>
         <span>Project Chat</span>
         <i class="iconfont" :class="`icon-${open ? 'down' : 'up'}`"></i>
+        <div class="unread" v-if="unread > 0">{{unread}}</div>
       </h5>
     </div>
     <div class="box" v-if="open">
-      <div class="content">
-        <div class="item" v-for="msg in messages" :key="msg.id">
-          <div class="state" :style="{background: msg.user.color}"></div>
-          <div class="container">
-            <div class="param">
-              <span class="name" :style="{color: msg.user.color}">{{msg.user.name}}</span>
-              <span class="time">{{new Date(msg.time).toLocaleString()}}</span>
+      <div class="content" ref="container">
+        <div class="item-list" ref="inner">
+          <div class="item" v-for="msg in messages" :key="msg.id">
+            <div class="state" :style="{background: msg.user.color}"></div>
+            <div class="container">
+              <div class="param">
+                <span class="name" :style="{color: msg.user.color}">{{msg.user.name}}</span>
+                <span class="time">{{new Date(msg.time).toLocaleString()}}</span>
+              </div>
+              <span class="text">{{msg.text}}</span>
             </div>
-            <span class="text">{{msg.text}}</span>
           </div>
         </div>
       </div>
@@ -33,10 +37,15 @@
 </template>
 
 <script>
+import Tooltip from '../Tooltip'
+
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Chat',
+  components: {
+    Tooltip
+  },
   data () {
     return {
       name: '',
@@ -44,7 +53,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('chat', ['open', 'user', 'messages']),
+    ...mapGetters('chat', ['open', 'user', 'messages', 'unread']),
     user () {
       return this.$store.state.chat.user
     }
@@ -56,11 +65,22 @@ export default {
   },
   methods: {
     ...mapActions('chat', ['toggleChat', 'setUser', 'setMessage']),
+
+    // chat list container stay at bottom
+    handleBottom () {
+      this.$refs.container.scrollTop = this.$refs.inner.offsetHeight - this.$refs.container.offsetHeight + 15
+    },
+
+    // update user name
     handleName (event) {
       this.setUser({name: event.target.value})
+      // focus textarea after modification done
       this.$el.querySelector('.textarea textarea').focus()
     },
+
+    // post message to server
     handleContent (event) {
+      // In case use shift + enter to change input to next line
       if (event.keyCode === 13 && !event.shiftKey) {
         event.preventDefault()
 
@@ -74,6 +94,7 @@ export default {
           this.setMessage(message)
 
           this.content = ''
+          this.handleBottom()
         }
       }
     }
@@ -86,6 +107,7 @@ export default {
   min-width: 200px;
   .label {
     h5 {
+      position: relative;
       display: flex;
       justify-content: space-between;
       margin: 0;
@@ -94,6 +116,18 @@ export default {
       line-height: 2rem;
       background: #22203a;
       cursor: pointer;
+      .unread {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        border-radius: 50%;
+        background: #4bd1c5;
+        top: 0;
+        left: 50%;
+        transform: translateY(-50%)
+      }
     }
     &:hover {
       border-top: 1px solid #4bd1c5;
