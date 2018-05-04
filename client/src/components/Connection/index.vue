@@ -24,7 +24,8 @@ export default {
   },
   watch: {
     active: 'handleProject',
-    preUser: 'handlePreUser'
+    preUser: 'handlePreUser',
+    preMessage: 'handlePreMessage'
   },
   methods: {
     ...mapActions(['setServer']),
@@ -118,6 +119,9 @@ export default {
     },
     handlePreUser (data) {
       data && this.chatSocket.emit('update_user', data)
+    },
+    handlePreMessage (data) {
+      data && this.chatSocket.emit('message', data)
     }
   },
   created () {

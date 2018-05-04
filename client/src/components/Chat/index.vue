@@ -14,7 +14,7 @@
           <input type="text" v-model="name" :style="{color: user.color}" @change="handleName($event)">
         </div>
         <div class="textarea">
-          <textarea placeholder="Type the words here..." />
+          <textarea v-model="content" placeholder="Type the words here..." @keydown="handleContent"/>
         </div>
       </div>
     </div>
@@ -28,7 +28,8 @@ export default {
   name: 'Chat',
   data () {
     return {
-      name: ''
+      name: '',
+      content: ''
     }
   },
   computed: {
@@ -43,9 +44,27 @@ export default {
     }
   },
   methods: {
-    ...mapActions('chat', ['toggleChat', 'setUser']),
+    ...mapActions('chat', ['toggleChat', 'setUser', 'setMessage']),
     handleName (event) {
       this.setUser({name: event.target.value})
+      this.$el.querySelector('.textarea textarea').focus()
+    },
+    handleContent (event) {
+      if (event.keyCode === 13 && !event.shiftKey) {
+        event.preventDefault()
+
+        let text = this.content.trim()
+
+        if (text) {
+          let message = {
+            text
+          }
+
+          this.setMessage(message)
+
+          this.content = ''
+        }
+      }
     }
   }
 }
