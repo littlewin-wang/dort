@@ -4,28 +4,55 @@
 
 <script>
 import socketIoClient from 'socket.io-client'
-import { mapGetters, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'connection',
   computed: {
-    ...mapGetters(['server']),
-    ...mapGetters('project', ['active'])
+    server () {
+      return this.$store.state.server
+    },
+    active () {
+      return this.$store.state.project.active
+    },
+    preUser () {
+      return this.$store.state.chat.preUser
+    },
+    preMessage () {
+      return this.$store.state.chat.preMessage
+    }
   },
   watch: {
-    active: 'handleProject'
+    active: 'handleProject',
+    preUser: 'handlePreUser',
+    preMessage: 'handlePreMessage'
   },
   methods: {
     ...mapActions(['setServer']),
     ...mapActions('project', ['setProjects']),
     ...mapActions('files', ['setFiles', 'createFile', 'deleteFile', 'createVersion']),
+    ...mapActions('chat', ['emptyMessages', 'updateUser', 'createMessage']),
     handleProject (data) {
       // 无效数据退出
       if (!data) {
         return
       }
 
-      // 建立到当前project的连接
+      // reset files & messages
+      this.setFiles([])
+      this.emptyMessages()
+
+      // reset connection to project
+      if (this.projectSocket) {
+        this.projectSocket.off('connect')
+        this.projectSocket.off('update_project')
+        this.projectSocket.off('create_file')
+        this.projectSocket.off('delete_file')
+        this.projectSocket.off('createVersion')
+        this.projectSocket.disconnect()
+      }
+
+      // build a new connection of project
       const projectUrl = `${this.server.domain}/project/${data.slug}`
       this.projectSocket = socketIoClient(projectUrl)
 
@@ -66,6 +93,35 @@ export default {
 
         this.createVersion(data)
       })
+
+      // reset connection of chat
+      if (this.chatSocket) {
+        this.chatSocket.off('connect')
+        this.chatSocket.off('user')
+        this.chatSocket.off('message')
+        this.projectSocket.disconnect()
+      }
+
+      const chatUrl = `${this.server.domain}/project/${data.slug}/chat`
+      this.chatSocket = socketIoClient(chatUrl)
+
+      this.chatSocket.on('connect', () => {
+        console.log('[WEB] - ' + `project ${data.slug} chat connected`)
+      })
+
+      this.chatSocket.on('user', (data) => {
+        this.updateUser(data)
+      })
+
+      this.chatSocket.on('message', (data) => {
+        this.createMessage(data)
+      })
+    },
+    handlePreUser (data) {
+      data && this.chatSocket.emit('update_user', data)
+    },
+    handlePreMessage (data) {
+      data && this.chatSocket.emit('message', data)
     }
   },
   created () {
