@@ -140,7 +140,7 @@ export default {
       padding: .2rem .5rem;
       font-weight: 300;
       line-height: 2rem;
-      background: #22203a;
+      background: #222233;
       cursor: pointer;
       .unread {
         position: absolute;
@@ -200,6 +200,7 @@ export default {
       }
     }
     .input {
+      background: #222233;
       padding: .2rem .5rem;
       line-height: 1.8rem;
       font-size: 13px;

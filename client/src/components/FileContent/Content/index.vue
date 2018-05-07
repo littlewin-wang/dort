@@ -16,13 +16,16 @@
         <div class="is-code" v-if="isCode">
           <div class="line" v-if="openDiff">
             <div class="line-part" v-for="(d, index) in diff" :key="index">
-              <span v-for="(line, idx) in d.lines" :key="idx">{{d.removed ? '' : line + d.startAt}}</span>
+              <span class="line" v-for="(line, idx) in d.lines" :key="idx">
+                <div class="notice" v-if="!d.removed && line + d.startAt === activeLine"></div>
+                {{d.removed ? '' : line + d.startAt}}
+              </span>
               <div v-if="(d.added || d.removed) && diff.length > 1" class="line-bg" :style="{ background: d.added ? '#41ff79' : '#f03'}"></div>
             </div>
           </div>
           <div class="line" v-else>
             <div class="line-part">
-              <span v-for="(line, idx) in version.content.split('\n').length" :key="idx">{{ line }}</span>
+              <span class="line" v-for="(line, idx) in version.content.split('\n').length" :key="idx">{{ line }}</span>
             </div>
           </div>
           <pre class="code" v-highlightjs="openDiff ? content : version.content"><code :class="[ extension ]"></code></pre>
@@ -58,7 +61,7 @@ export default {
   },
   computed: {
     ...mapGetters(['server']),
-    ...mapGetters('files', ['activeFile', 'activeIndex']),
+    ...mapGetters('files', ['activeFile', 'activeIndex', 'activeLine']),
     ...mapGetters('project', ['active']),
     extension () {
       return this.activeFile.extension
@@ -118,11 +121,13 @@ export default {
     }
   },
   methods: {
-    ...mapActions('files', ['changeIndex']),
+    ...mapActions('files', ['changeIndex', 'setLine']),
     // change active version
     changeActive (index) {
       this.changeIndex(index)
       this.index = 0
+
+      this.setLine(null)
     },
 
     // add index by number
@@ -173,15 +178,26 @@ export default {
       .is-code {
         display: flex;
         .line {
-          opacity: .6;
           .line-part {
             position: relative;
-            span {
+            .line {
+              position: relative;
               display: block;
               font-size: 13px;
               height: 20px;
               line-height: 20px;
               padding: 0 20px;
+              color: rgba(255, 255, 255, .6);
+              .notice {
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: 100%;
+                width: calc(100vw - 250px - 180px);
+                background: #00d8ff;
+                opacity: .4;
+                pointer-events: none;
+              }
             }
             .line-bg {
               position: absolute;
