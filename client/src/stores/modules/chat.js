@@ -4,7 +4,7 @@ const state = {
   preUser: null,
   messages: [],
   preMessage: null,
-  question: null,
+  target: null,
   unread: 0
 }
 
@@ -14,7 +14,7 @@ const getters = {
   preUser: state => state.activeUser,
   messages: state => state.messages,
   preMessage: state => state.activeMessage,
-  question: state => state.question,
+  target: state => state.target,
   unread: state => state.unread
 }
 
@@ -38,6 +38,10 @@ const actions = {
 
   setMessage ({ commit }, data) {
     commit('SET_MESSAGE', data)
+  },
+
+  setTarget ({ commit }, data) {
+    commit('SET_TARGET', data)
   },
 
   openChat ({ commit }) {
@@ -82,6 +86,10 @@ const mutations = {
 
   SET_MESSAGE (state, data) {
     state.preMessage = data
+  },
+
+  SET_TARGET (state, data) {
+    state.target = data
   },
 
   OPEN_CHAT (state) {

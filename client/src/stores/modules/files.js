@@ -4,6 +4,7 @@ const state = {
   tree: new FileTree({ rmEmpty: true }),
   activeFile: null,
   activeIndex: 0,
+  activeLine: null,
   search: ''
 }
 
@@ -11,6 +12,7 @@ const getters = {
   tree: state => state.tree,
   activeFile: state => state.activeFile,
   activeIndex: state => state.activeIndex,
+  activeLine: state => state.activeLine,
   search: state => state.search
 }
 
@@ -33,6 +35,11 @@ const actions = {
   setFile ({ commit }, data) {
     commit('SET_FILE', data)
     commit('CHNAGE_INDEX', 0)
+  },
+
+  // 当前行
+  setLine ({ commit }, line) {
+    commit('SET_LINE', line)
   },
 
   changeIndex ({ commit }, index) {
@@ -111,6 +118,10 @@ const mutations = {
       state.activeFile.isNew = false
       state.activeFile.isChanged = false
     }
+  },
+
+  SET_LINE (state, line) {
+    state.activeLine = line
   },
 
   CHNAGE_INDEX (state, index) {

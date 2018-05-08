@@ -1,6 +1,6 @@
 {
   "name": "dort",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "File sharing through web with wonderful alternation.",
   "main": "bin/index.js",
   "bin": {
