@@ -57,5 +57,5 @@ Then you can launch dort as
 - [x] node procedure to watch files in local
 - [x] state management
 - [x] FE web
-- [·] chat and barrage (chat system done)
+- [x] chat and barrage
 - [ ] File content interactive
