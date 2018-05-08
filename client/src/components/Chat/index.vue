@@ -28,6 +28,10 @@
           <span>Nickname assign to you is </span>
           <input type="text" v-model="name" :style="{color: user.color}" @change="handleName($event)">
         </div>
+        <div class="file" v-if="target">
+          <span class="path" @click="handlePath">{{target.file}}:{{target.line}}#{{target.version}}</span>
+          <i class="iconfont icon-close" @click="setTarget(null), setLine(null)"></i>
+        </div>
         <div class="textarea">
           <textarea v-model="content" placeholder="Type the words here..." @keydown="handleContent"/>
         </div>
@@ -63,6 +67,9 @@ export default {
     },
     messages () {
       return this.$store.state.chat.messages
+    },
+    target () {
+      return this.$store.state.chat.target
     }
   },
   watch: {
@@ -85,7 +92,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions('chat', ['toggleChat', 'setUser', 'setMessage']),
+    ...mapActions('chat', ['toggleChat', 'setUser', 'setMessage', 'setTarget']),
+    ...mapActions('files', ['setFile', 'setLine', 'changeIndex']),
 
     // chat list container stay at bottom
     handleBottom () {
@@ -123,6 +131,23 @@ export default {
     // update isBottom when scroll
     handleScroll () {
       this.isBottom = (this.$refs.container.scrollTop + this.$refs.container.offsetHeight >= this.$refs.inner.offsetHeight + 15)
+    },
+
+    // set file - version - line
+    handlePath () {
+      // set file
+      if (this.target.file) {
+        this.setFile(this.target.file)
+      }
+
+      // set version
+      this.changeIndex(this.target.version)
+
+      // set line
+      this.setLine(this.target.line)
+
+      this.$el.querySelector('.textarea textarea').focus()
+      this.handleBottom()
     }
   }
 }
@@ -211,6 +236,20 @@ export default {
         }
         input:hover {
           background: #2c2a42;
+        }
+      }
+      .file {
+        line-height: 14px;
+        margin-bottom: 4px;
+        .path {
+          margin-right: 1rem;
+          color: #4bd1c5;
+          text-decoration: underline;
+          cursor: pointer;
+        }
+        i {
+          font-size: 13px;
+          cursor: pointer;
         }
       }
       .textarea {

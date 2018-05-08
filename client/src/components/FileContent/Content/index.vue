@@ -19,7 +19,7 @@
               <span class="line" v-for="(line, idx) in d.lines" :key="idx" @click="!d.removed ? handleLine(line + d.startAt) : null">
                 <div class="notice" v-if="!d.removed && line + d.startAt === activeLine"></div>
                 {{d.removed ? '' : line + d.startAt}}
-                <span class="question">?</span>
+                <span class="question" v-if="!d.removed">?</span>
               </span>
               <div v-if="(d.added || d.removed) && diff.length > 1" class="line-bg" :style="{ background: d.added ? '#41ff79' : '#f03'}"></div>
             </div>
