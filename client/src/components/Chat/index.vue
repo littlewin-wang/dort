@@ -1,5 +1,6 @@
 <template>
   <div class="chat-container">
+    <barrageItem :style="{opacity: isBarrage ? 1 : 0}" v-for="msg in messages" :key="msg.id" :id="msg.id" :barrage="{text: msg.text, color: msg.user.color}"></barrageItem>
     <div class="label" @click="toggleChat">
       <Tooltip position="left" v-if="!open">Discuss this project with other prople</Tooltip>
       <h5>
@@ -28,8 +29,12 @@
       </div>
       <div class="input">
         <div class="name">
-          <span>Nickname assign to you is </span>
-          <input type="text" v-model="name" :style="{color: user.color}" @change="handleName($event)">
+          <span class="label">Nickname assign to you is </span>
+          <input class="nickname" type="text" v-model="name" :style="{color: user.color}" @change="handleName($event)">
+          <label class="switch">
+            <input type="checkbox" :checked="isBarrage" @click="isBarrage = !isBarrage">
+            <span class="slider">{{isBarrage ? '弹幕' : ''}}</span>
+          </label>
         </div>
         <div class="file" v-if="target">
           <span class="path" @click="handlePath(target)">{{target.file}}:{{target.line}}#{{target.version}}</span>
@@ -45,19 +50,22 @@
 
 <script>
 import Tooltip from '../Tooltip'
+import barrageItem from '../Barrage/item'
 
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Chat',
   components: {
-    Tooltip
+    Tooltip,
+    barrageItem
   },
   data () {
     return {
       name: '',
       content: '',
-      isBottom: true
+      isBottom: true,
+      isBarrage: true
     }
   },
   computed: {
@@ -240,11 +248,61 @@ export default {
       font-size: 13px;
       font-weight: 300;
       .name {
-        span {
+        .label {
           opacity: .6;
         }
-        input:hover {
-          background: #2c2a42;
+        .nickname {
+          width: 110px;
+          &:hover {
+            background: #2c2a42;
+          }
+        }
+        .switch {
+          position: relative;
+          display: inline-block;
+          width: 30px;
+          height: 15px;
+          vertical-align: middle;
+        }
+
+        .switch input { display: none; }
+
+        .slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: #ccc;
+          -webkit-transition: .4s;
+          transition: .4s;
+          font-size: 15px;
+          line-height: 15px;
+        }
+
+        .slider:before {
+          position: absolute;
+          content: "";
+          height: 15px;
+          width: 15px;
+          left: 0;
+          bottom: 0;
+          background-color: white;
+          -webkit-transition: .4s;
+          transition: .4s;
+        }
+
+        input:checked + .slider {
+          background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+          box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+          transform: translateX(15px);
         }
       }
       .textarea {
