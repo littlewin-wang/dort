@@ -1,5 +1,6 @@
 <template>
   <div class="chat-container">
+    <barrageItem v-for="msg in messages" :key="msg.id" :id="msg.id" :barrage="{text: msg.text, color: msg.user.color}"></barrageItem>
     <div class="label" @click="toggleChat">
       <Tooltip position="left" v-if="!open">Discuss this project with other prople</Tooltip>
       <h5>
@@ -45,13 +46,15 @@
 
 <script>
 import Tooltip from '../Tooltip'
+import barrageItem from '../Barrage/item'
 
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Chat',
   components: {
-    Tooltip
+    Tooltip,
+    barrageItem
   },
   data () {
     return {
