@@ -127,6 +127,7 @@ export default {
   },
   methods: {
     ...mapActions('files', ['changeIndex', 'setLine']),
+    ...mapActions('chat', ['setTarget', 'openChat']),
     // change active version
     changeActive (index) {
       this.changeIndex(index)
@@ -142,7 +143,14 @@ export default {
 
     // click line to set the file - version - line
     handleLine (line) {
-      console.log(line)
+      let target = {
+        file: this.activeFile.path.full,
+        version: this.activeIndex,
+        line
+      }
+
+      this.setTarget(target)
+      this.openChat()
     }
   }
 }
