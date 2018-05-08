@@ -304,8 +304,8 @@ class Watcher
             // Set up
             const relativePath = _path.replace(this.path, '.')
 
-            // Emit
-            this.socket.emit('delete_folder', { path: relativePath })
+            // // Emit
+            // this.socket.emit('delete_folder', { path: relativePath })
 
             // Debug
             if(this.config.debug >= 1)
