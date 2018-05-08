@@ -18,6 +18,9 @@
                 <span class="name" :style="{color: msg.user.color}">{{msg.user.name}}</span>
                 <span class="time">{{new Date(msg.time).toLocaleString()}}</span>
               </div>
+              <div class="file" v-if="msg.file">
+                <span class="path" @click="handlePath(msg)">{{msg.file}}:{{msg.line}}#{{msg.version}}</span>
+              </div>
               <span class="text">{{msg.text}}</span>
             </div>
           </div>
@@ -29,7 +32,7 @@
           <input type="text" v-model="name" :style="{color: user.color}" @change="handleName($event)">
         </div>
         <div class="file" v-if="target">
-          <span class="path" @click="handlePath">{{target.file}}:{{target.line}}#{{target.version}}</span>
+          <span class="path" @click="handlePath(target)">{{target.file}}:{{target.line}}#{{target.version}}</span>
           <i class="iconfont icon-close" @click="setTarget(null), setLine(null)"></i>
         </div>
         <div class="textarea">
@@ -120,6 +123,12 @@ export default {
             text
           }
 
+          if (this.target) {
+            message.file = this.target.file
+            message.version = this.target.version
+            message.line = this.target.line
+          }
+
           this.setMessage(message)
 
           this.content = ''
@@ -134,17 +143,17 @@ export default {
     },
 
     // set file - version - line
-    handlePath () {
+    handlePath (target) {
       // set file
-      if (this.target.file) {
-        this.setFile(this.target.file)
+      if (target.file) {
+        this.setFile(target.file)
       }
 
       // set version
-      this.changeIndex(this.target.version)
+      this.changeIndex(target.version)
 
       // set line
-      this.setLine(this.target.line)
+      this.setLine(target.line)
 
       this.$el.querySelector('.textarea textarea').focus()
       this.handleBottom()
@@ -238,26 +247,27 @@ export default {
           background: #2c2a42;
         }
       }
-      .file {
-        line-height: 14px;
-        margin-bottom: 4px;
-        .path {
-          margin-right: 1rem;
-          color: #4bd1c5;
-          text-decoration: underline;
-          cursor: pointer;
-        }
-        i {
-          font-size: 13px;
-          cursor: pointer;
-        }
-      }
       .textarea {
         textarea {
           width: 100%;
           height: 3rem;
           padding-right: calc(15px + .5rem);
         }
+      }
+    }
+    .file {
+      line-height: 14px;
+      margin-bottom: 4px;
+      .path {
+        margin-right: 1rem;
+        font-size: 12px;
+        color: #4bd1c5;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+      i {
+        font-size: 12px;
+        cursor: pointer;
       }
     }
   }
