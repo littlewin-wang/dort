@@ -1,30 +1,37 @@
 <p align='center'>
   <p align='center'><img width='150' src='https://raw.githubusercontent.com/coding-show/dort/master/client/static/images/favicon.png' /></p>
-  <p align='center'>File sharing through web with wonderful alternation.</p>
+  <p align='center'>
+    File sharing through web with wonderful alternation.</br>
+    文件演示分享Web工具
+  </p>
 </p>
 
 ### Introduction
 Dort is a npm tool to share your editing, file structure through web during presentation or code review.
 
+Dort 是一个使用者在 **讲演** 或者 **代码审阅** 过程 分享 **项目文件**、**编辑过程** 的web工具。
+
 Everybody in the same network can browse through the files, check file history, copy the code, download the project, preview images, etc.
 
+同一内网中的用户可以 **浏览文件**，**查看文件编辑版本**，**复制文本**，**下载整个项目**，**查看图片**，甚至可以与所有打开web的用户进行交流。
+
 ### Feature
-- Easy for Client (all platform with browser)
-- Live Update
-- Low Network Traffic
+- Easy for Client (all platform with browser) 便于使用
+- Live Update 实时刷新
+- Low Network Traffic 低网络负担
 
 ### Demo
 ![](https://github.com/coding-show/dort/blob/master/media/screenshot.png?raw=true)
 
 ### Instruction
-1. Prepare NodeJS and NPM environment
+1. Prepare NodeJS and NPM environment 准备nodejs和npm环境
 
-2. Install package
+2. Install package 安装包
 ``` bash
-# npm install -g dort
+# npm install -g dort 
 ```
 
-3. Launch dort inside your project folder
+3. Launch dort inside your project folder 启动server端
 ```
 # cd /your-files
 # dort
