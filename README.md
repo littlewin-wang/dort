@@ -21,14 +21,16 @@ Everybody in the same network can browse through the files, check file history, 
 - Low Network Traffic 低网络负担
 
 ### Demo
-![](https://github.com/coding-show/dort/blob/master/media/screenshot.png?raw=true)
+![](https://github.com/coding-show/dort/blob/master/media/screenshot1.png?raw=true)
+![](https://github.com/coding-show/dort/blob/master/media/screenshot2.png?raw=true)
+![](https://github.com/coding-show/dort/blob/master/media/screenshot3.png?raw=true)
 
 ### Instruction
 1. Prepare NodeJS and NPM environment 准备nodejs和npm环境
 
 2. Install package 安装包
 ``` bash
-# npm install -g dort 
+# npm install -g dort
 ```
 
 3. Launch dort inside your project folder 启动server端
@@ -37,9 +39,9 @@ Everybody in the same network can browse through the files, check file history, 
 # dort
 ```
 
-4. Open default browser with default port - [http://localhost:4574](http://localhost:4574)
+4. Open default browser with default port - [http://localhost:4574](http://localhost:4574) 端口可设置
 
-5. Shre the url to any body in the same network
+5. Shre the url to any body in the same network 其他内网用户可以通过相应端口访问
 
 ### Configuration
 params | Type | Default	| Description
