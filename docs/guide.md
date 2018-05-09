@@ -42,8 +42,10 @@ max-file-size	| number	| 99999	| max file size
 5. 分享url给其他内网用户
 
 ### 使用
-内网用户点击链接进入Web界面后可以看到分享的项目结构、文件内容、每个文件更新的版本记录等
-以及会分配到一个聊天系统的昵称
+- 内网用户点击链接进入Web界面后可以看到分享的项目结构、文件内容、每个文件更新的版本记录等
+- 以及会分配到一个聊天系统的昵称
+
+![](https://github.com/coding-show/dort/blob/master/media/screenshot4.png?raw=true)
 
 ##### 显示
 - 文件内容显示，目前支持文本文件和图片
@@ -59,3 +61,9 @@ max-file-size	| number	| 99999	| max file size
 - 更改用户昵称
 - 发送聊天内容
 - 开启/关闭弹幕显示
+
+![](https://github.com/coding-show/dort/blob/master/media/screenshot5.png?raw=true)
+
+##### 进阶
+- 支持在聊天中选中行插入链接
+- 点击链接可以直接显示对应文件对应行
