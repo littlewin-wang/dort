@@ -1,5 +1,6 @@
 <template>
   <div class="file-tree">
+    <Loading v-if="isLoading" :text="'File Loading...'"></Loading>
     <div class="file-empty" v-if="tree.filesCount === 0">
       <p>NO FILE. WAIT FOR LOADING.</p>
     </div>
@@ -13,12 +14,14 @@
 </template>
 
 <script>
+import Loading from '../Loading'
 import Folder from './Folder'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'FileTree',
   components: {
+    Loading,
     Folder
   },
   data () {
@@ -27,6 +30,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['isLoading']),
     ...mapGetters('files', ['tree'])
   },
   watch: {
@@ -40,6 +44,7 @@ export default {
 
 <style lang="scss" scoped>
 .file-tree {
+  position: relative;
   .file-empty {
     p {
       font-size: 14px;

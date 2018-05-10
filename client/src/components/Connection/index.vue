@@ -28,7 +28,7 @@ export default {
     preMessage: 'handlePreMessage'
   },
   methods: {
-    ...mapActions(['setServer']),
+    ...mapActions(['setServer', 'setConnect', 'setLoading']),
     ...mapActions('project', ['setProjects']),
     ...mapActions('files', ['setFiles', 'createFile', 'deleteFile', 'createVersion']),
     ...mapActions('chat', ['emptyMessages', 'updateUser', 'createMessage']),
@@ -52,6 +52,7 @@ export default {
         this.projectSocket.disconnect()
       }
 
+      this.setConnect(true)
       // build a new connection of project
       const projectUrl = `${this.server.domain}/project/${data.slug}`
       this.projectSocket = socketIoClient(projectUrl)
@@ -60,6 +61,8 @@ export default {
         if (process.env.NODE_ENV !== 'production') {
           console.log('[WEB] - ' + `project ${data.slug} connected`)
         }
+
+        this.setConnect(false)
       })
 
       this.projectSocket.on('update_project', (data) => {
@@ -67,7 +70,9 @@ export default {
           console.log('[WEB] - ' + `project ${data.name} updated`)
         }
 
+        this.setLoading(true)
         this.setFiles(data.files.files)
+        this.setLoading(false)
       })
 
       this.projectSocket.on('create_file', (data) => {

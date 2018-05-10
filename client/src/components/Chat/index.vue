@@ -87,7 +87,9 @@ export default {
     open (value) {
       if (value) {
         window.requestAnimationFrame(() => {
-          this.handleBottom()
+          if (this.$refs.container && this.$refs.inner) {
+            this.handleBottom()
+          }
         })
       }
     },
@@ -96,7 +98,7 @@ export default {
     },
     messages () {
       window.requestAnimationFrame(() => {
-        if (this.isBottom) {
+        if (this.isBottom && this.$refs.container && this.$refs.inner) {
           this.handleBottom()
         }
       })

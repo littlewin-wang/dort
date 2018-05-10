@@ -1,5 +1,7 @@
 <template>
   <div id="app">
+    <Loading v-if="isConnecting" :text="'Connecting poject ' + (active ? active.name : '')"></Loading>
+
     <div class="menu">
       <div class="title">
         <h3 class="label" @click="resetIndex">Dort</h3>
@@ -58,6 +60,7 @@
 </template>
 
 <script>
+import Loading from './components/Loading'
 import Connection from './components/Connection'
 import FileTree from './components/FileTree'
 import Index from './components/Index'
@@ -69,6 +72,7 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'app',
   components: {
+    Loading,
     Connection,
     FileTree,
     Index,
@@ -82,7 +86,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['server']),
+    ...mapGetters(['server', 'isConnecting']),
     ...mapGetters('project', ['active', 'all']),
     ...mapGetters('files', ['activeFile']),
     zipUrl () {
