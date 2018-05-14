@@ -69,7 +69,7 @@ export default {
     }
     .content {
       flex: 1;
-      overflow-y: auto;
+      overflow: auto;
       margin-right: -15px;
     }
   }

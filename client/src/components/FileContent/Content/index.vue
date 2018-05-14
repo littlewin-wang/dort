@@ -186,7 +186,6 @@ export default {
     flex: 1;
     overflow: auto;
     margin-right: -15px;
-    margin-bottom: -15px;
     background: rgb(34, 32, 58);
     .content-main {
       overflow: auto;

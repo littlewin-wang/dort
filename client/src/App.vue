@@ -205,6 +205,7 @@ export default {
     }
     .files {
       height: calc(100% - 90px);
+      width: 320px;
     }
   }
   .content {
