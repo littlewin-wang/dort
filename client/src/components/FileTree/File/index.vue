@@ -82,7 +82,7 @@ export default {
 
     .text {
       display: inline-block;
-      padding: 0 12px;
+      padding: 0 21px 0 6px;
       .label {
         opacity: .6;
       }

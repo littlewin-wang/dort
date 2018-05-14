@@ -101,6 +101,7 @@ export default {
         }
       }
       .left, .right {
+        flex: 0 0 100px;
         font-size: 0;
         i {
           position: relative;
