@@ -17,7 +17,6 @@ describe('Tooltip', () => {
   it('tooltip', () => {
     let vm = createTooltip('test tooltip', { position: 'left' })
 
-    // eslint-disable-next-line
     expect(vm.$el.classList.contains('left')).to.true
     expect(vm.$el.querySelector('.container').textContent).to.equal(' test tooltip')
   })

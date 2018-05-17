@@ -13,6 +13,7 @@ describe('Loading', () => {
         text: 'text string'
       }
     })
+
     expect(wrapper.find('h1').text()).to.equal('text string')
   })
 })

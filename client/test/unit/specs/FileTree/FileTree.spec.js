@@ -19,7 +19,8 @@ describe('FileTree', () => {
         getters: {
           tree: () => {
             return {
-              filesCount: 0
+              filesCount: 0,
+              folders: []
             }
           }
         }
@@ -39,16 +40,13 @@ describe('FileTree', () => {
   it('no-loading', () => {
     const wrapper = shallowMount(FileTree, { store, localVue })
 
-    // eslint-disable-next-line
     expect(wrapper.findAll(Loading).length).to.equal(0)
   })
 
   it('no-content', () => {
     const wrapper = shallowMount(FileTree, { store, localVue })
 
-    // eslint-disable-next-line
     expect(wrapper.find('.file-empty')).to.exist
-    // eslint-disable-next-line
     expect(wrapper.findAll('.file-container').length).to.equal(0)
   })
 })
@@ -65,7 +63,7 @@ describe('FileTree', () => {
           tree: () => {
             return {
               filesCount: 5,
-              folders: 3
+              folders: []
             }
           }
         }
@@ -85,16 +83,13 @@ describe('FileTree', () => {
   it('has-loading', () => {
     const wrapper = shallowMount(FileTree, { store, localVue })
 
-    // eslint-disable-next-line
     expect(wrapper.findAll(Loading).length).to.equal(1)
   })
 
   it('has-content', () => {
     const wrapper = shallowMount(FileTree, { store, localVue })
 
-    // eslint-disable-next-line
     expect(wrapper.findAll('.file-empty').length).to.equal(0)
-    // eslint-disable-next-line
-    expect(wrapper.findAll(Folder).length).to.equal(modules.files.getters.tree().folders)
+    expect(wrapper.findAll(Folder).length).to.equal(modules.files.getters.tree().folders.length)
   })
 })

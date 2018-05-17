@@ -6,7 +6,7 @@ import Index from '@/components/Index'
 const localVue = createLocalVue()
 localVue.use(Vuex)
 
-describe('Index.vue', () => {
+describe('Index', () => {
   let getters
   let store
 
