@@ -86,7 +86,76 @@ let content = {
 
 let directory = './f2/'
 
-describe('Folder', () => {
+describe('Folder-1', () => {
+  let modules
+  let store
+
+  beforeEach(() => {
+    modules = {
+      files: {
+        namespaced: true,
+        getters: {
+          search: () => ''
+        }
+      }
+    }
+
+    store = new Vuex.Store({
+      modules
+    })
+  })
+
+  it('basic', () => {
+    const wrapper = shallowMount(Folder, {
+      propsData: {
+        content,
+        directory,
+        depth: 2
+      },
+      store,
+      localVue
+    })
+
+    expect(wrapper.vm.fullPath).to.eql(directory.concat(content.name))
+    expect(wrapper.vm.isShow).to.be.true
+  })
+})
+
+describe('Folder-2', () => {
+  let modules
+  let store
+
+  beforeEach(() => {
+    modules = {
+      files: {
+        namespaced: true,
+        getters: {
+          search: () => 'f1-sub'
+        }
+      }
+    }
+
+    store = new Vuex.Store({
+      modules
+    })
+  })
+
+  it('basic', () => {
+    const wrapper = shallowMount(Folder, {
+      propsData: {
+        content,
+        directory,
+        depth: 2
+      },
+      store,
+      localVue
+    })
+
+    expect(wrapper.vm.isShow).to.be.false
+  })
+})
+
+describe('Folder-3', () => {
   let modules
   let store
 
@@ -116,6 +185,6 @@ describe('Folder', () => {
       localVue
     })
 
-    expect(wrapper.vm.fullPath).to.eql(directory.concat(content.name))
+    expect(wrapper.vm.nameArr).to.eql({ arr: ['', ''], keyword: modules.files.getters.search() })
   })
 })
