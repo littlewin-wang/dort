@@ -34,7 +34,7 @@ describe('File', () => {
               id: 13
             }
           },
-          search: () => ''
+          search: () => 'f2-sub'
         }
       }
     }
@@ -56,7 +56,7 @@ describe('File', () => {
 
     expect(wrapper.isVisible()).to.be.true
     expect(wrapper.find('.name').classes()).to.include('active')
-    expect(wrapper.vm.nameArr).to.eql({ arr: [content.name], keyword: '' })
+    expect(wrapper.vm.nameArr).to.eql({ arr: [content.name], keyword: modules.files.getters.search() })
     expect(wrapper.find('.new').exists()).to.be.false
     expect(wrapper.find('.changed').exists()).to.be.false
   })
@@ -90,5 +90,43 @@ describe('File', () => {
     })
 
     expect(wrapper.find('.changed').exists()).to.be.true
+  })
+
+  it('is-show', () => {
+    content.path.full = './f1/f1-sub/1.txt'
+    const wrapper1 = shallowMount(File, {
+      propsData: {
+        content,
+        depth: 4
+      },
+      store,
+      localVue
+    })
+    expect(wrapper1.isVisible()).to.be.false
+
+    content.path = null
+    const wrapper2 = shallowMount(File, {
+      propsData: {
+        content,
+        depth: 4
+      },
+      store,
+      localVue
+    })
+    expect(wrapper2.isVisible()).to.be.true
+  })
+
+  it('name-arr', () => {
+    content.name = 'f2-sub'
+
+    const wrapper = shallowMount(File, {
+      propsData: {
+        content,
+        depth: 4
+      },
+      store,
+      localVue
+    })
+    expect(wrapper.vm.nameArr).to.eql({ arr: ['', ''], keyword: modules.files.getters.search() })
   })
 })
