@@ -10,5 +10,6 @@ before_install:
 - export TRAVIS_COMMIT_EMAIL="$(git log --no-merges -n 1 --format=%ae)"
 install:
   - npm install
-test:
+script:
+  - npm run lint
   - npm run unit
