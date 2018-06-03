@@ -11,13 +11,13 @@ module.exports = function karmaConfig (config) {
     // 1. install corresponding karma launcher
     //    http://karma-runner.github.io/0.13/config/browsers.html
     // 2. add it to the `browsers` array below.
-    browsers: ['Chrome'],  // 'Chrome_without_security'
-    // customLaunchers: {
-    //   Chrome_without_security: {
-    //     base: 'Chrome',
-    //     flags: ['--disable-web-security']
-    //   }
-    // },
+    browsers: ['Chrome_no_sandbox'],  // 'Chrome_without_security'
+    customLaunchers: {
+      Chrome_no_sandbox: {
+        base: 'Chrome',
+        flags: ['--no-sandbox']
+      }
+    },
     frameworks: ['mocha', 'sinon-chai'],
     reporters: ['spec', 'coverage'],
     files: ['./index.js'],
