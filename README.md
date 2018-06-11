@@ -6,6 +6,9 @@
   </p>
 </p>
 
+[![Build Status](https://travis-ci.org/coding-tool/dort.svg?branch=master)](https://travis-ci.org/coding-tool/dort)
+[![npm version](https://img.shields.io/npm/v/dort.svg?style=flat-square)](https://badge.fury.io/js/dort)
+
 ### Introduction - ([https://coding-tool.github.io/dort/](https://coding-tool.github.io/dort/))
 Dort is a npm tool to share your editing, file structure through web during presentation or code review.
 
