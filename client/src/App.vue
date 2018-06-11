@@ -128,7 +128,7 @@ export default {
   font-family: Helvetica, Arial, sans-serif;
   color: #fff;
   .menu {
-    flex: 0 0 250px;
+    flex: 0 0 320px;
     background: rgb(34, 32, 58);
     .title {
       position: relative;

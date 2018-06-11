@@ -3,10 +3,5 @@
 }
 
 .table {
-  .td {
-    color: white;
-  }
-  .tr {
-    font-weight: 12px;
-  }
+  font-weight: 12px;
 }
