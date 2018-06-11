@@ -211,7 +211,7 @@ export default {
                 left: 0;
                 top: 0;
                 height: 100%;
-                width: calc(100vw - 250px - 180px);
+                width: calc(100vw - 320px - 180px);
                 background: #00d8ff;
                 opacity: .4;
                 pointer-events: none;
@@ -235,7 +235,7 @@ export default {
               left: 0;
               top: 0;
               height: 100%;
-              width: calc(100vw - 250px - 180px);
+              width: calc(100vw - 320px - 180px);
               opacity: .4;
               pointer-events: none;
             }
